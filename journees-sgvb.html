@@ -120,7 +120,7 @@ const MAXY = 1100;
 // --- Résumé & détail par journée (navigable) ---
 (function(){
   function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
-  let i=P.DAYS.length-1; // defaut : derniere journee complete
+  let i=P.DAYS.length-1; // défaut : dernière journée complète
   function render(){
     if(!P.DAYS.length){document.getElementById("dlabel").textContent="—";
       document.getElementById("recap").innerHTML='<p style="color:var(--muted);font-style:italic">Aucune journée complète pour le moment.</p>';
@@ -130,11 +130,11 @@ const MAXY = 1100;
     document.getElementById("dcount").textContent=d.date+" · journée "+(i+1)+" / "+P.DAYS.length;
     document.getElementById("prev").disabled=(i<=0);
     document.getElementById("next").disabled=(i>=P.DAYS.length-1);
-    // resume humoristique
+    // résumé humoristique
     document.getElementById("recap").innerHTML = d.recap
       ? d.recap.split("\n\n").map(p=>'<p>'+esc(p)+'</p>').join("")
       : '<p style="color:var(--muted);font-style:italic">Résumé à écrire dans journees-stories.json pour cette journée.</p>';
-    // detail (matchs + classement de la journee)
+    // détail (matchs + classement de la journée)
     const rows=d.ranking.map((r,k)=>{
       const isWin=d.winners.includes(r.name);
       return '<tr><td>'+(k+1)+'</td><td><span class="dot" style="background:'+P.color[r.name]+'"></span>'+esc(r.name)+(isWin&&r.pts>0?' <span class="crown">&#9733;</span>':'')+'</td><td class="num'+(isWin&&r.pts>0?' win':'')+'">'+r.pts+'</td></tr>';
