@@ -1,6 +1,9 @@
 # Garde-fou etancheite : rien de prive ne doit jamais etre commite ici.
 # On ne versionne QUE les pages du site (index + pages publiques + aym.html chiffree).
 
+# Secret : mot de passe de la page Aymeric (jamais committe)
+.aym-password
+
 # Sources / donnees brutes (au cas ou un fichier serait copie par erreur)
 *.json
 *.md

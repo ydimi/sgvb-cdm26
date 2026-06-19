@@ -84,9 +84,14 @@ if (fs.existsSync(INDEX_TPL)) {
   console.log(`généré  : index.html (+ menu)`);
 }
 
-const password = process.env.AYM_PASSWORD;
+// Mot de passe Aymeric : variable d'env AYM_PASSWORD, sinon fichier local .aym-password
+// (jamais committe, cf .gitignore) pour ne pas avoir a le taper dans la commande.
+const PW_FILE = path.join(HERE, ".aym-password");
+let password = process.env.AYM_PASSWORD;
+if (!password && fs.existsSync(PW_FILE)) password = fs.readFileSync(PW_FILE, "utf8").trim();
 if (!password) {
-  console.error("ABANDON : variable d'environnement AYM_PASSWORD manquante (mot de passe page Aymeric).");
+  console.error("ABANDON : mot de passe Aymeric introuvable.");
+  console.error(`  -> cree le fichier ${PW_FILE} contenant le mot de passe, ou exporte AYM_PASSWORD.`);
   process.exit(1);
 }
 if (!fs.existsSync(AYM_SRC)) {
@@ -99,4 +104,4 @@ fs.writeFileSync(path.join(HERE, AYM_OUT), page);
 console.log(`chiffré : ${AYM_OUT} (${(page.length / 1024).toFixed(1)} Ko)`);
 
 console.log(`\nOK -> ${copied} page(s) publique(s) + 1 page chiffrée.`);
-console.log(`Prochaine étape : git add -A && git commit -m "chore: maj du jour" && git push`);
+console.log(`Prochaine étape : git add -A && git commit && git push  (ou simplement ./deploy.sh qui fait tout)`);

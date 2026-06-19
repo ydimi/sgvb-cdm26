@@ -20,19 +20,21 @@ prono ou snapshot personnel n'est jamais copié. Le `.gitignore` bloque en plus 
 
 ```bash
 # 1. Régénérer les sources (comme d'habitude)
-#    - dans ~/work/custom/wc26 : /maj  (classement, journées, super-vainqueur)
+#    - dans ~/work/custom/wc26 : /maj      (classement, histoires, journées, super-vainqueur)
 #    - dans ~/work/custom/aym  : /maj-aym  (dashboard.html)
 
-# 2. Publier
+# 2. Publier + déployer en une commande
 cd ~/work/custom/sgvb-cdm26
-AYM_PASSWORD='le-mot-de-passe' node publish.mjs
-
-# 3. Déployer
-git add -A && git commit -m "chore: maj du jour" && git push
+./deploy.sh
 ```
 
-Le mot de passe d'Aymeric n'est **jamais** stocké dans le repo : il sert uniquement à chiffrer
-`aym.html` au moment du `publish`. Pour le changer, relancer `publish.mjs` avec une autre valeur.
+`deploy.sh` lance `publish.mjs` (copie liste blanche + chiffre la page Aymeric), puis commit + push.
+
+## Mot de passe de la page Aymeric
+
+Stocké en local dans `.aym-password` (jamais committé, cf `.gitignore`). `publish.mjs` le lit
+automatiquement — rien à taper. Pour le changer : éditer `.aym-password` puis relancer `./deploy.sh`.
+On peut aussi le passer ponctuellement via `AYM_PASSWORD='...' node publish.mjs` (prioritaire sur le fichier).
 
 ## Test local
 
