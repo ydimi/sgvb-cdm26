@@ -41,7 +41,7 @@ function assertPublic(name) {
 const NAV_ITEMS = [
   ["index.html", "🏠 Accueil"],
   ["classement.html", "📈 Classement"],
-  ["histoire-du-jour.html", "📖 Histoires"],
+  ["histoire-du-jour.html", "📖 Histoires du jour"],
   ["journees-sgvb.html", "🗓️ Journées"],
   ["super-vainqueur-sgvb.html", "🌌 Super vainqueur"],
   ["aym.html", "🔒 Aymeric"],

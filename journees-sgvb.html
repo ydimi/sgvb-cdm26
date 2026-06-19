@@ -28,8 +28,17 @@
   .grid-line{stroke:var(--grid);stroke-width:1;stroke-dasharray:3 4;opacity:.55}
   .dayblock{margin-bottom:14px}
   .dayhead{font-weight:600;margin:0 0 2px}
-  .daymatches{color:var(--muted);font-size:12px;margin:0 0 8px}
+  .daymatches{color:var(--muted);font-size:12px;margin:0 0 8px;line-height:1.7}
   .pill{display:inline-block;font-size:11px;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:1px 8px;margin-left:8px}
+  .nav{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px}
+  .nav button{background:var(--panel);color:var(--text);border:1px solid var(--grid);border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer;line-height:1;transition:background .15s}
+  .nav button:hover:not(:disabled){background:#1f6feb;border-color:#1f6feb}
+  .nav button:disabled{opacity:.3;cursor:default}
+  .nav .day{min-width:260px;text-align:center}
+  .nav .day .d{font-size:18px;font-weight:700}
+  .nav .day .c{font-size:12px;color:var(--muted)}
+  .recap p{margin:0 0 11px;line-height:1.62;font-size:15px}
+  .recap p:last-child{margin:0}
 </style>
 </head>
 <body><style>
@@ -39,11 +48,10 @@
   .sgvb-nav a { flex:0 0 auto; color:#e6edf3; text-decoration:none; padding:7px 11px; border-radius:8px; background:#161b22; border:1px solid #2a313c; font:600 13px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
   .sgvb-spacer { height:58px; }
 </style>
-<nav class="sgvb-nav"><div class="in"><a href="index.html">🏠 Accueil</a><a href="classement.html">📈 Classement</a><a href="histoire-du-jour.html">📖 Histoires</a><a href="journees-sgvb.html">🗓️ Journées</a><a href="super-vainqueur-sgvb.html">🌌 Super vainqueur</a><a href="aym.html">🔒 Aymeric</a></div></nav>
+<nav class="sgvb-nav"><div class="in"><a href="index.html">🏠 Accueil</a><a href="classement.html">📈 Classement</a><a href="histoire-du-jour.html">📖 Histoires du jour</a><a href="journees-sgvb.html">🗓️ Journées</a><a href="super-vainqueur-sgvb.html">🌌 Super vainqueur</a><a href="aym.html">🔒 Aymeric</a></div></nav>
 <div class="sgvb-spacer"></div>
 <div class="wrap">
   <h1>SGVB — le meilleur par journée</h1>
-  <p class="sub">Points gagnés par journée de Coupe du Monde (J1/J2/J3 de poules, puis phases finales). Seules les journées entièrement terminées sont affichées. Couleurs identiques au graphe de cumul.</p>
 
   <h2>Palmarès — victoires de journée</h2>
   <div class="card"><table id="palmares"></table></div>
@@ -54,11 +62,17 @@
     <svg id="chart" class="chart" viewBox="0 0 980 360" preserveAspectRatio="xMidYMid meet"></svg>
   </div>
 
-  <h2>Détail par journée</h2>
+  <h2>Résumé & détail par journée</h2>
+  <div class="nav">
+    <button id="prev" aria-label="Journée précédente">&#8249;</button>
+    <div class="day"><div class="d" id="dlabel"></div><div class="c" id="dcount"></div></div>
+    <button id="next" aria-label="Journée suivante">&#8250;</button>
+  </div>
+  <div class="card recap"><div id="recap"></div></div>
   <div class="card" id="days"></div>
 </div>
 <script>
-const P = {"players":["DADA3498","YozLePirate","Bazooz","Douillard_aymeri","Flomar1502"],"color":{"DADA3498":"#2a9d8f","YozLePirate":"#e76f51","Bazooz":"#5aa9e6","Douillard_aymeri":"#b07cd6","Flomar1502":"#f4b400"},"DAYS":[{"j":"J1","full":"1re journée de poules","date":"11/06-18/06","matches":["Mexique-Afrique du Sud","Corée du Sud-Tchéquie","Canada-Bosnie","États-Unis-Paraguay","Qatar-Suisse","Brésil-Maroc","Haïti-Écosse","Australie-Turquie","Allemagne-Curaçao","Pays-Bas-Japon","Côte d’Ivoire-Équateur","Suède-Tunisie","Espagne-Cap-Vert","Belgique-Égypte","Arabie saoudite-Uruguay","Iran-Nouvelle-Zélande","France-Sénégal","Irak-Norvège","Argentine-Algérie","Autriche-Jordanie","Portugal-RD Congo","Angleterre-Croatie","Ghana-Panama","Ouzbékistan-Colombie"],"ranking":[{"name":"DADA3498","pts":1082},{"name":"YozLePirate","pts":762},{"name":"Bazooz","pts":666},{"name":"Douillard_aymeri","pts":619},{"name":"Flomar1502","pts":510}],"best":1082,"winners":["DADA3498"]}],"palmares":[{"name":"DADA3498","wins":1,"total":1229},{"name":"YozLePirate","wins":0,"total":909},{"name":"Bazooz","wins":0,"total":813},{"name":"Douillard_aymeri","wins":0,"total":764},{"name":"Flomar1502","wins":0,"total":510}]};
+const P = {"players":["DADA3498","YozLePirate","Bazooz","Douillard_aymeri","Flomar1502"],"color":{"DADA3498":"#2a9d8f","YozLePirate":"#e76f51","Bazooz":"#5aa9e6","Douillard_aymeri":"#b07cd6","Flomar1502":"#f4b400"},"DAYS":[{"j":"J1","full":"1re journée de poules","date":"11/06-18/06","matches":["Mexique 2-0 Afrique du Sud","Corée du Sud 2-1 Tchéquie","Canada 1-1 Bosnie","États-Unis 4-1 Paraguay","Qatar 1-1 Suisse","Brésil 1-1 Maroc","Haïti 0-1 Écosse","Australie 2-0 Turquie","Allemagne 7-1 Curaçao","Pays-Bas 2-2 Japon","Côte d’Ivoire 1-0 Équateur","Suède 5-1 Tunisie","Espagne 0-0 Cap-Vert","Belgique 1-1 Égypte","Arabie saoudite 1-1 Uruguay","Iran 2-2 Nouvelle-Zélande","France 3-1 Sénégal","Irak 1-4 Norvège","Argentine 3-0 Algérie","Autriche 3-1 Jordanie","Portugal 1-1 RD Congo","Angleterre 4-2 Croatie","Ghana 1-0 Panama","Ouzbékistan 1-3 Colombie"],"ranking":[{"name":"DADA3498","pts":1082},{"name":"YozLePirate","pts":762},{"name":"Bazooz","pts":666},{"name":"Douillard_aymeri","pts":619},{"name":"Flomar1502","pts":510}],"best":1082,"winners":["DADA3498"],"recap":"Vingt-quatre matchs, une avalanche de nuls, et un SGVB qui découvre que pronostiquer une Coupe du Monde c'est surtout encaisser des zéros avec le sourire. Le festival des égalités (Brésil-Maroc, Belgique-Égypte, l'Espagne tenue en échec par le Cap-Vert, le Portugal calé par la RD Congo...) a transformé chaque favori en piège à points, et tout le monde y a laissé des plumes.\n\nAu sommet, DADA termine empereur de la J1 (1082) en encaissant tranquillement, match après match, sans jamais se prendre pour un génie. Derrière, YozLePirate (762) court avec ses paris de poète : un sublime Brésil-Maroc 1-1 deviné au score exact, mais aussi un joker x2 parti en fumée sur Pays-Bas-Japon et un nul argentin qui n'est jamais venu (Messi a répondu par un triplé, l'insolent).\n\nLe vrai casse du tournoi est signé Douillard : joker x2 posé sur le nul Brésil-Maroc, 244 points encaissés, le seul à avoir eu ce culot. Bazooz et Flomar, eux, ont surtout tenu la chandelle pendant les nuits blanches. Moralité de cette première journée : dans ce groupe, c'est celui qui parie le moins fou qui repart avec le magot."}],"palmares":[{"name":"DADA3498","wins":1,"total":1229},{"name":"YozLePirate","wins":0,"total":909},{"name":"Bazooz","wins":0,"total":813},{"name":"Douillard_aymeri","wins":0,"total":764},{"name":"Flomar1502","wins":0,"total":510}]};
 const MAXY = 1100;
 
 // --- Palmarès ---
@@ -103,20 +117,38 @@ const MAXY = 1100;
   });
 })();
 
-// --- Détail par journée ---
+// --- Résumé & détail par journée (navigable) ---
 (function(){
-  const box=document.getElementById("days");
-  box.innerHTML=P.DAYS.map(d=>{
-    const rows=d.ranking.map((r,i)=>{
+  function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+  let i=P.DAYS.length-1; // defaut : derniere journee complete
+  function render(){
+    if(!P.DAYS.length){document.getElementById("dlabel").textContent="—";
+      document.getElementById("recap").innerHTML='<p style="color:var(--muted);font-style:italic">Aucune journée complète pour le moment.</p>';
+      document.getElementById("days").innerHTML="";return;}
+    const d=P.DAYS[i];
+    document.getElementById("dlabel").textContent=d.j+" — "+d.full;
+    document.getElementById("dcount").textContent=d.date+" · journée "+(i+1)+" / "+P.DAYS.length;
+    document.getElementById("prev").disabled=(i<=0);
+    document.getElementById("next").disabled=(i>=P.DAYS.length-1);
+    // resume humoristique
+    document.getElementById("recap").innerHTML = d.recap
+      ? d.recap.split("\n\n").map(p=>'<p>'+esc(p)+'</p>').join("")
+      : '<p style="color:var(--muted);font-style:italic">Résumé à écrire dans journees-stories.json pour cette journée.</p>';
+    // detail (matchs + classement de la journee)
+    const rows=d.ranking.map((r,k)=>{
       const isWin=d.winners.includes(r.name);
-      return '<tr><td>'+(i+1)+'</td><td><span class="dot" style="background:'+P.color[r.name]+'"></span>'+r.name+(isWin&&r.pts>0?' <span class="crown">&#9733;</span>':'')+'</td><td class="num'+(isWin&&r.pts>0?' win':'')+'">'+r.pts+'</td></tr>';
+      return '<tr><td>'+(k+1)+'</td><td><span class="dot" style="background:'+P.color[r.name]+'"></span>'+esc(r.name)+(isWin&&r.pts>0?' <span class="crown">&#9733;</span>':'')+'</td><td class="num'+(isWin&&r.pts>0?' win':'')+'">'+r.pts+'</td></tr>';
     }).join("");
     const wl=d.winners.length?d.winners.join(", "):"--";
-    return '<div class="dayblock"><div class="dayhead">'+d.j+' &mdash; '+d.full+' ('+d.date+')'+
-      '<span class="pill">meilleur : '+wl+' ('+d.best+' pts)</span></div>'+
-      '<div class="daymatches">'+d.matches.join(" &middot; ")+'</div>'+
+    document.getElementById("days").innerHTML='<div class="dayblock"><div class="dayhead">Classement de la journée'+
+      '<span class="pill">meilleur : '+esc(wl)+' ('+d.best+' pts)</span></div>'+
+      '<div class="daymatches">'+d.matches.map(esc).join(" &middot; ")+'</div>'+
       '<table><tr><th>#</th><th>Joueur</th><th class="num">Pts du jour</th></tr>'+rows+'</table></div>';
-  }).join("");
+  }
+  document.getElementById("prev").onclick=()=>{if(i>0){i--;render();}};
+  document.getElementById("next").onclick=()=>{if(i<P.DAYS.length-1){i++;render();}};
+  document.addEventListener("keydown",e=>{if(e.key==="ArrowLeft"&&i>0){i--;render();}if(e.key==="ArrowRight"&&i<P.DAYS.length-1){i++;render();}});
+  render();
 })();
 </script>
 </body>
