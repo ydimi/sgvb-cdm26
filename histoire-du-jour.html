@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Histoire du jour — poules CdM 2026 (SGVB)</title>
+<style>
+  :root{--bg:#0e1116;--panel:#161b22;--grid:#2a313c;--text:#e6edf3;--muted:#8b949e;--me:#f4b400}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:860px;margin:0 auto;padding:24px 18px 64px}
+  h1{font-size:21px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+  .nav{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 18px}
+  .nav button{background:var(--panel);color:var(--text);border:1px solid var(--grid);border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer;line-height:1;transition:background .15s}
+  .nav button:hover:not(:disabled){background:#1f6feb;border-color:#1f6feb}
+  .nav button:disabled{opacity:.3;cursor:default}
+  .nav .day{min-width:230px;text-align:center}
+  .nav .day .d{font-size:18px;font-weight:600}
+  .nav .day .c{font-size:12px;color:var(--muted)}
+  .card{background:var(--panel);border:1px solid var(--grid);border-radius:12px;padding:16px 18px;margin:0 0 16px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 12px}
+  .story p{margin:0 0 11px;line-height:1.62;font-size:15px}
+  .story p:last-child{margin:0}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--grid)}
+  th{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+  tr:last-child td{border-bottom:0}
+  .sc{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;color:#0e1116}
+  .bars .row{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+  .bars .nm{width:128px;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bars .track{flex:1;background:#0e1116;border-radius:6px;height:20px;position:relative;overflow:hidden}
+  .bars .fill{height:100%;border-radius:6px;min-width:2px}
+  .bars .val{width:42px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
+  .bars .row.me .nm{color:var(--me);font-weight:700}
+  .star{color:var(--me)}
+  .empty{color:var(--muted);font-style:italic}
+</style>
+</head>
+<body><style>
+  body { margin-top:0 !important; padding-top:0 !important; }
+  .sgvb-nav { position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e18; border-bottom:1px solid #2a3142; }
+  .sgvb-nav .in { display:flex; gap:6px; justify-content:center; align-items:center; max-width:1000px; margin:0 auto; padding:10px 12px; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
+  .sgvb-nav a { flex:0 0 auto; color:#e6e9f0; text-decoration:none; padding:7px 11px; border-radius:8px; background:#171c2c; border:1px solid #2a3142; font:600 13px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .sgvb-spacer { height:58px; }
+</style>
+<nav class="sgvb-nav"><div class="in"><a href="index.html">🏠 Accueil</a><a href="classement.html">📈 Classement</a><a href="histoire-du-jour.html">📖 Histoires</a><a href="journees-sgvb.html">🗓️ Journées</a><a href="super-vainqueur-sgvb.html">🌌 Super vainqueur</a><a href="aym.html">🔒 Aymeric</a></div></nav>
+<div class="sgvb-spacer"></div>
+<div class="wrap">
+  <h1>Histoire du jour — SGVB</h1>
+  <p class="sub">Une journee = de 10h00 a 9h59 le lendemain (soir + nuit). Recit des matchs vu sous l'angle des 5 joueurs SGVB et de nos pronos. Fleches ou touches ← → pour changer de jour.</p>
+  <div class="nav">
+    <button id="prev" aria-label="Jour precedent">&#8249;</button>
+    <div class="day"><div class="d" id="dlabel"></div><div class="c" id="dcount"></div></div>
+    <button id="next" aria-label="Jour suivant">&#8250;</button>
+  </div>
+  <div class="card story"><div id="story"></div></div>
+  <div class="card"><h2>Le fil du jour</h2><div id="fil"></div></div>
+  <div class="card"><h2>Points du jour — SGVB</h2><div id="bars" class="bars"></div></div>
+</div>
+<script>
+const DAYS=[{"key":"2026-06-11","label":"Jeudi 11 juin","matches":[{"h":"21h00","home":"Mexique","away":"Afrique du Sud","sh":2,"sa":0,"our":"2-0","st":"EXACT","pts":69},{"h":"04h00","home":"Corée du Sud","away":"Tchéquie","sh":2,"sa":1,"our":"1-1","st":"RATE","pts":0}],"sgvb":[{"name":"DADA3498","pts":69,"best":true},{"name":"YozLePirate","pts":69,"best":true},{"name":"Bazooz","pts":69,"best":true},{"name":"Douillard_aymeri","pts":49,"best":false},{"name":"Flomar1502","pts":49,"best":false}],"story":"Le Mondial s'ouvre et tout le SGVB se jette sur le Mexique a l'Azteca : 2-0 pile, carton plein pour le trio DADA-Yoz-Bazooz (69 chacun), pendant que Douillard et Flomar, trop gourmands sur le score, se contentent du strapontin (49).\n\nPuis la Coree renverse la Tchequie 2-1 en seconde periode, et la, plus personne : les cinq avaient coche un timide 1-1 et repartent bredouilles. Premiere soiree, premiere photo de famille : on se tient tous par la main, a un cheveu les uns des autres."},{"key":"2026-06-12","label":"Vendredi 12 juin","matches":[{"h":"21h00","home":"Canada","away":"Bosnie","sh":1,"sa":1,"our":"1-1","st":"EXACT","pts":137},{"h":"03h00","home":"États-Unis","away":"Paraguay","sh":4,"sa":1,"our":"1-0","st":"BON","pts":74}],"sgvb":[{"name":"DADA3498","pts":211,"best":true},{"name":"YozLePirate","pts":211,"best":true},{"name":"Bazooz","pts":74,"best":false},{"name":"Douillard_aymeri","pts":74,"best":false},{"name":"Flomar1502","pts":74,"best":false}],"story":"Soiree des jumeaux. Sur Canada-Bosnie, Yoz et DADA degainent le meme 1-1 que personne d'autre n'ose, et le Canada arrache son nul historique a la 78e : +137 chacun, les deux compères s'envolent. Bazooz, Douillard et Flomar avaient mise une victoire canadienne et regardent le train passer.\n\nSur USA-Paraguay (4-1), tout le monde encaisse ses 74 points de banque sans transpirer. Bilan de la journee : Yoz et DADA a 211, les trois autres scotches a 74. Le duo de tete prend ses aises."},{"key":"2026-06-13","label":"Samedi 13 juin","matches":[{"h":"21h00","home":"Qatar","away":"Suisse","sh":1,"sa":1,"our":"0-2","st":"RATE","pts":0},{"h":"00h00","home":"Brésil","away":"Maroc","sh":1,"sa":1,"our":"1-1","st":"EXACT","pts":142},{"h":"03h00","home":"Haïti","away":"Écosse","sh":0,"sa":1,"our":"1-1","st":"RATE","pts":0},{"h":"06h00","home":"Australie","away":"Turquie","sh":2,"sa":0,"our":"1-2","st":"RATE","pts":0}],"sgvb":[{"name":"Douillard_aymeri","pts":288,"best":true},{"name":"DADA3498","pts":166,"best":false},{"name":"YozLePirate","pts":142,"best":false},{"name":"Bazooz","pts":44,"best":false},{"name":"Flomar1502","pts":44,"best":false}],"story":"La nuit du casse. Douillard avait garde son joker x2 au chaud : il le pose sur le nul Bresil-Maroc, le 1-1 tombe, et son 2-2 double se transforme en magot (244). Yoz, lui, sort le 1-1 EXACT (142) -- superbe, mais coiffe sur le fil par le braqueur.\n\nEt c'est la que Yoz se saborde : seul des cinq a avoir mise le nul sur Haiti-Ecosse, il prend 0 pendant que les quatre autres empochent 44 sur la victoire ecossaise. Le Qatar tient la Suisse, l'Australie sort la Turquie : deux pronos de plus a la poubelle. Douillard rafle la journee (288), Yoz paie cash son romantisme haitien."},{"key":"2026-06-14","label":"Dimanche 14 juin","matches":[{"h":"19h00","home":"Allemagne","away":"Curaçao","sh":7,"sa":1,"our":"4-0","st":"BON","pts":15},{"h":"22h00","home":"Pays-Bas","away":"Japon","sh":2,"sa":2,"our":"1-2","st":"RATE","pts":0},{"h":"01h00","home":"Côte d’Ivoire","away":"Équateur","sh":1,"sa":0,"our":"2-1","st":"BON","pts":108},{"h":"04h00","home":"Suède","away":"Tunisie","sh":5,"sa":1,"our":"1-1","st":"RATE","pts":0}],"sgvb":[{"name":"DADA3498","pts":195,"best":true},{"name":"YozLePirate","pts":123,"best":false},{"name":"Bazooz","pts":87,"best":false},{"name":"Flomar1502","pts":87,"best":false},{"name":"Douillard_aymeri","pts":15,"best":false}],"story":"Le jour ou Yoz a brule son joker. Sur Pays-Bas-Japon, il abat son x2 sur une victoire japonaise... 2-2, joker parti en fumee, 0 double. Douleur seche.\n\nHeureusement, son 🎲 S sur la Cote d'Ivoire (1-0) rentre (108) et sauve la soiree. Allemagne 7-1 Curacao : tout le SGVB avait sous-estime le massacre (15 ridicules pour les cinq). Suede 5-1 : DADA, Bazooz et Flomar banquent les Suedois (72), Yoz s'entete sur un nul. DADA empoche tranquillement la journee (195), Yoz suit (123) mais avec l'arriere-gout du joker crame."},{"key":"2026-06-15","label":"Lundi 15 juin","matches":[{"h":"18h00","home":"Espagne","away":"Cap-Vert","sh":0,"sa":0,"our":"4-0","st":"RATE","pts":0},{"h":"21h00","home":"Belgique","away":"Égypte","sh":1,"sa":1,"our":"2-1","st":"RATE","pts":0},{"h":"00h00","home":"Arabie saoudite","away":"Uruguay","sh":1,"sa":1,"our":"0-2","st":"RATE","pts":0},{"h":"03h00","home":"Iran","away":"Nouvelle-Zélande","sh":2,"sa":2,"our":"2-0","st":"RATE","pts":0}],"sgvb":[{"name":"DADA3498","pts":116,"best":true},{"name":"Bazooz","pts":116,"best":true},{"name":"YozLePirate","pts":0,"best":false},{"name":"Douillard_aymeri","pts":0,"best":false},{"name":"Flomar1502","pts":0,"best":false}],"story":"La nuit noire. Quatre favoris tenus en echec le meme soir, et un SGVB groggy. Yoz coche un 4-0 espagnol triomphal : 0-0. Douillard, lui, ose carrement un 8-0 sur le pauvre Cap-Vert, meme sanction.\n\nBelgique, Arabie, Iran : nuls partout. Seuls DADA et Bazooz sauvent un meuble en ayant flaire le 1-1 iranien (116). Yoz, Douillard et Flomar terminent la soiree a un grand zero pointe. La lecon du soir : ce n'etait pas une nuit a trancher quoi que ce soit."},{"key":"2026-06-16","label":"Mardi 16 juin","matches":[{"h":"21h00","home":"France","away":"Sénégal","sh":3,"sa":1,"our":"2-1","st":"BON","pts":46},{"h":"00h00","home":"Irak","away":"Norvège","sh":1,"sa":4,"our":"0-3","st":"BON","pts":30},{"h":"03h00","home":"Argentine","away":"Algérie","sh":3,"sa":0,"our":"1-1","st":"RATE","pts":0},{"h":"06h00","home":"Autriche","away":"Jordanie","sh":3,"sa":1,"our":"2-0","st":"BON","pts":38}],"sgvb":[{"name":"DADA3498","pts":149,"best":true},{"name":"Bazooz","pts":144,"best":false},{"name":"Flomar1502","pts":119,"best":false},{"name":"YozLePirate","pts":114,"best":false},{"name":"Douillard_aymeri","pts":76,"best":false}],"story":"Les cadors repondent, les poetes trinquent. DADA et Bazooz collent le 3-1 francais EXACT (76) ; Yoz, fidele a lui-meme, finit un but trop court (2-1, 46).\n\nSur l'Argentine, Yoz tente le nul facon poete maudit : Messi plante un triple, 3-0, zero pour le reveur. Le 🎲 A irakien (0-3, Norvege gagne 4-1) rapporte ses 30 a tout le monde, l'Autriche offre 38 a Yoz et Bazooz. Au final DADA (149) et Bazooz (144) caracolent, Yoz ferme la marche du quatuor de tete (114)."},{"key":"2026-06-17","label":"Mercredi 17 juin","matches":[{"h":"19h00","home":"Portugal","away":"RD Congo","sh":1,"sa":1,"our":"2-0","st":"RATE","pts":0},{"h":"22h00","home":"Angleterre","away":"Croatie","sh":4,"sa":2,"our":"2-0","st":"BON","pts":59},{"h":"01h00","home":"Ghana","away":"Panama","sh":1,"sa":0,"our":"0-1","st":"RATE","pts":0},{"h":"04h00","home":"Ouzbékistan","away":"Colombie","sh":1,"sa":3,"our":"0-2","st":"BON","pts":44}],"sgvb":[{"name":"DADA3498","pts":176,"best":true},{"name":"Flomar1502","pts":137,"best":false},{"name":"Bazooz","pts":132,"best":false},{"name":"Douillard_aymeri","pts":117,"best":false},{"name":"YozLePirate","pts":103,"best":false}],"story":"La journee maudite de Yoz. Son gros 🎲 S Panama explose en plein vol : le Ghana, pourtant ampute de quatre cadres, plante a la 90e+5 (1-0). Pire encore, Flomar sort le 1-0 ghaneen EXACT (93) et grimpe, pendant que Yoz reste a sec.\n\nEgalite dans la misere sur Portugal-RDC : les cinq avaient mise le Portugal, le nul tombe, 0 pour tout le monde. Yoz limite la casse avec l'Angleterre (59) et la Colombie (44), mais termine DERNIER du SGVB sur la journee (103). DADA, lui, rafle encore la mise (176)."},{"key":"2026-06-18","label":"Jeudi 18 juin","matches":[{"h":"18h00","home":"Tchéquie","away":"Afrique du Sud","sh":1,"sa":1,"our":"2-0","st":"RATE","pts":0},{"h":"21h00","home":"Suisse","away":"Bosnie","sh":4,"sa":1,"our":"1-0","st":"BON","pts":76},{"h":"00h00","home":"Canada","away":"Qatar","sh":6,"sa":0,"our":"3-0","st":"BON","pts":71},{"h":"03h00","home":"Mexique","away":"Corée du Sud","sh":1,"sa":0,"our":"1-1","st":"RATE","pts":0}],"sgvb":[{"name":"DADA3498","pts":147,"best":true},{"name":"YozLePirate","pts":147,"best":true},{"name":"Bazooz","pts":147,"best":true},{"name":"Douillard_aymeri","pts":145,"best":false},{"name":"Flomar1502","pts":0,"best":false}],"story":"Photo finish a trois. DADA, Yoz et Bazooz terminent la journee a egalite PARFAITE (147) : memes reussites sur la Suisse (4-1) et le Canada (6-0), memes ratages sur le nul tcheque et le Mexique. Les triples du jour.\n\nDouillard echoue a deux petits points (145) : le seul a avoir flaire le Mexique vainqueur, mais il a manque la Suisse ET le Canada. Et Flomar signe un zero pointe douloureux (mauvaise issue partout). Yoz reste dans le coup, mais a egalite : pas un pouce de terrain repris sur DADA."}];
+const ME="YozLePirate";
+const COLOR={"DADA3498":"#2a9d8f","YozLePirate":"#e76f51","Bazooz":"#5aa9e6","Douillard_aymeri":"#b07cd6","Flomar1502":"#f4b400"};
+const STCOLOR={"EXACT":"#43aa8b","BON":"#5aa9e6","RATE":"#e76f51","-":"#8b949e"};
+let i=DAYS.length-1;
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function render(){
+  if(!DAYS.length){document.getElementById('story').innerHTML='<p class="empty">Aucune journee complete pour le moment.</p>';
+    document.getElementById('dlabel').textContent='—';return;}
+  const d=DAYS[i];
+  document.getElementById('dlabel').textContent=d.label;
+  document.getElementById('dcount').textContent='journee '+(i+1)+' / '+DAYS.length;
+  document.getElementById('prev').disabled=(i<=0);
+  document.getElementById('next').disabled=(i>=DAYS.length-1);
+  // recit
+  const st=document.getElementById('story');
+  st.innerHTML = d.story ? d.story.split('\n\n').map(p=>'<p>'+esc(p)+'</p>').join('')
+    : '<p class="empty">Recit a ecrire dans histoires-jour.json pour cette journee.</p>';
+  // fil du jour
+  let rows=d.matches.map(m=>{
+    const res=m.sh+'-'+m.sa;
+    return '<tr><td>'+m.h+'</td><td>'+esc(m.home)+' <span class="sc">'+res+'</span> '+esc(m.away)+'</td>'
+      +'<td class="sc">'+m.our+'</td>'
+      +'<td><span class="tag" style="background:'+(STCOLOR[m.st]||STCOLOR['-'])+'">'+m.st+'</span></td>'
+      +'<td class="sc">'+(m.pts||0)+'</td></tr>';
+  }).join('');
+  document.getElementById('fil').innerHTML='<table><thead><tr><th>Heure</th><th>Match</th><th>Notre prono</th><th>Statut</th><th>Pts</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  // barres points du jour
+  const max=Math.max(1,...d.sgvb.map(p=>p.pts));
+  document.getElementById('bars').innerHTML=d.sgvb.map(p=>{
+    const w=Math.round(p.pts/max*100);
+    return '<div class="row'+(p.name===ME?' me':'')+'"><div class="nm">'+(p.name===ME?'★ ':'')+esc(p.name)+'</div>'
+      +'<div class="track"><div class="fill" style="width:'+w+'%;background:'+(COLOR[p.name]||'#5aa9e6')+'"></div></div>'
+      +'<div class="val">'+p.pts+(p.best?' <span class="star">&#9733;</span>':'')+'</div></div>';
+  }).join('');
+}
+document.getElementById('prev').onclick=()=>{if(i>0){i--;render();}};
+document.getElementById('next').onclick=()=>{if(i<DAYS.length-1){i++;render();}};
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&&i>0){i--;render();}if(e.key==='ArrowRight'&&i<DAYS.length-1){i++;render();}});
+render();
+</script>
+</body>
+</html>
