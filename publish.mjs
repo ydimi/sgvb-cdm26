@@ -31,7 +31,7 @@ const FORBIDDEN = /(methode|strategie|pronos|tableau-final|analyses|classements|
 
 function assertPublic(name) {
   if (FORBIDDEN.test(name)) {
-    console.error(`ABANDON : nom de fichier suspect (prive) refuse a la publication : ${name}`);
+    console.error(`ABANDON : nom de fichier suspect (privé) refusé à la publication : ${name}`);
     process.exit(1);
   }
 }
@@ -68,12 +68,12 @@ for (const f of PUBLIC_FILES) {
   assertPublic(path.basename(f.from));
   if (!fs.existsSync(f.from)) {
     console.error(`ABANDON : fichier source attendu introuvable : ${f.from}`);
-    console.error(`  -> lance d'abord la generation wc26 (/maj) avant de publier.`);
+    console.error(`  -> lance d'abord la génération wc26 (/maj) avant de publier.`);
     process.exit(1);
   }
   const raw = fs.readFileSync(f.from, "utf8");
   fs.writeFileSync(path.join(HERE, f.to), injectNav(raw));
-  console.log(`copie   : ${f.to} (+ menu)`);
+  console.log(`copié   : ${f.to} (+ menu)`);
   copied++;
 }
 
@@ -81,7 +81,7 @@ for (const f of PUBLIC_FILES) {
 const INDEX_TPL = path.join(HERE, "index.template.html");
 if (fs.existsSync(INDEX_TPL)) {
   fs.writeFileSync(path.join(HERE, "index.html"), injectNav(fs.readFileSync(INDEX_TPL, "utf8")));
-  console.log(`genere  : index.html (+ menu)`);
+  console.log(`généré  : index.html (+ menu)`);
 }
 
 const password = process.env.AYM_PASSWORD;
@@ -96,7 +96,7 @@ if (!fs.existsSync(AYM_SRC)) {
 const dashboard = injectNav(fs.readFileSync(AYM_SRC, "utf8"));
 const page = await encryptHtml(dashboard, password);
 fs.writeFileSync(path.join(HERE, AYM_OUT), page);
-console.log(`chiffre : ${AYM_OUT} (${(page.length / 1024).toFixed(1)} Ko)`);
+console.log(`chiffré : ${AYM_OUT} (${(page.length / 1024).toFixed(1)} Ko)`);
 
-console.log(`\nOK -> ${copied} page(s) publique(s) + 1 page chiffree.`);
-console.log(`Prochaine etape : git add -A && git commit -m "chore: maj du jour" && git push`);
+console.log(`\nOK -> ${copied} page(s) publique(s) + 1 page chiffrée.`);
+console.log(`Prochaine étape : git add -A && git commit -m "chore: maj du jour" && git push`);
