@@ -72,6 +72,7 @@ function unlockPage(data) {
     <input id="pw" type="password" autocomplete="current-password" placeholder="Mot de passe" autofocus>
     <button type="submit">Entrer</button>
     <div class="err" id="err"></div>
+    <a href="index.html" style="display:inline-block;margin-top:14px;color:var(--muted);font-size:13px;text-decoration:none;">← Retour au menu</a>
   </form>
 <script>
 const DATA = ${JSON.stringify(data)};

@@ -35,6 +35,29 @@ function assertPublic(name) {
   }
 }
 
+// --- Barre de navigation persistante injectee en haut de chaque page ------
+// (wc26 n'est jamais modifie : on injecte uniquement dans les copies publiees.)
+const NAV_ITEMS = [
+  ["index.html", "🏠 Accueil"],
+  ["classement.html", "📈 Classement"],
+  ["journees-sgvb.html", "🗓️ Journées"],
+  ["super-vainqueur-sgvb.html", "🌌 Super vainqueur"],
+  ["aym.html", "🔒 Aymeric"],
+];
+function navHtml(active) {
+  const link = ([href, label]) => {
+    const on = href === active;
+    const bg = on ? "#f59e0b" : "#171c2c";
+    const col = on ? "#1a1205" : "#e6e9f0";
+    return `<a href="${href}" style="color:${col};text-decoration:none;white-space:nowrap;padding:7px 11px;border-radius:8px;background:${bg};border:1px solid #2a3142;font-weight:600;">${label}</a>`;
+  };
+  return `<nav style="position:sticky;top:0;z-index:99999;display:flex;gap:6px;align-items:center;overflow-x:auto;background:#0b0e18;border-bottom:1px solid #2a3142;padding:8px 12px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:13px;-webkit-overflow-scrolling:touch;">${NAV_ITEMS.map(link).join("")}</nav>`;
+}
+function injectNav(html, active) {
+  const nav = navHtml(active);
+  return /<body[^>]*>/i.test(html) ? html.replace(/<body[^>]*>/i, (m) => m + nav) : nav + html;
+}
+
 let copied = 0;
 for (const f of PUBLIC_FILES) {
   assertPublic(path.basename(f.from));
@@ -43,8 +66,9 @@ for (const f of PUBLIC_FILES) {
     console.error(`  -> lance d'abord la generation wc26 (/maj) avant de publier.`);
     process.exit(1);
   }
-  fs.copyFileSync(f.from, path.join(HERE, f.to));
-  console.log(`copie   : ${f.to}`);
+  const raw = fs.readFileSync(f.from, "utf8");
+  fs.writeFileSync(path.join(HERE, f.to), injectNav(raw, f.to));
+  console.log(`copie   : ${f.to} (+ menu)`);
   copied++;
 }
 
@@ -57,7 +81,8 @@ if (!fs.existsSync(AYM_SRC)) {
   console.error(`ABANDON : ${AYM_SRC} introuvable -> lance d'abord /maj-aym.`);
   process.exit(1);
 }
-const page = await encryptHtml(fs.readFileSync(AYM_SRC, "utf8"), password);
+const dashboard = injectNav(fs.readFileSync(AYM_SRC, "utf8"), "aym.html");
+const page = await encryptHtml(dashboard, password);
 fs.writeFileSync(path.join(HERE, AYM_OUT), page);
 console.log(`chiffre : ${AYM_OUT} (${(page.length / 1024).toFixed(1)} Ko)`);
 
