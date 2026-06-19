@@ -34,47 +34,47 @@
 </head>
 <body><style>
   body { margin-top:0 !important; padding-top:0 !important; }
-  .sgvb-nav { position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e18; border-bottom:1px solid #2a3142; }
+  .sgvb-nav { position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e13; border-bottom:1px solid #2a313c; }
   .sgvb-nav .in { display:flex; gap:6px; justify-content:center; align-items:center; max-width:1000px; margin:0 auto; padding:10px 12px; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
-  .sgvb-nav a { flex:0 0 auto; color:#e6e9f0; text-decoration:none; padding:7px 11px; border-radius:8px; background:#171c2c; border:1px solid #2a3142; font:600 13px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .sgvb-nav a { flex:0 0 auto; color:#e6edf3; text-decoration:none; padding:7px 11px; border-radius:8px; background:#161b22; border:1px solid #2a313c; font:600 13px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
   .sgvb-spacer { height:58px; }
 </style>
 <nav class="sgvb-nav"><div class="in"><a href="index.html">🏠 Accueil</a><a href="classement.html">📈 Classement</a><a href="histoire-du-jour.html">📖 Histoires</a><a href="journees-sgvb.html">🗓️ Journées</a><a href="super-vainqueur-sgvb.html">🌌 Super vainqueur</a><a href="aym.html">🔒 Aymeric</a></div></nav>
 <div class="sgvb-spacer"></div>
 <div class="wrap">
-  <h1>SGVB — le meilleur par journee</h1>
-  <p class="sub">Points gagnes par journee de Coupe du Monde (J1/J2/J3 de poules, puis phases finales). Seules les journees entierement terminees sont affichees. Couleurs identiques au graphe de cumul.</p>
+  <h1>SGVB — le meilleur par journée</h1>
+  <p class="sub">Points gagnés par journée de Coupe du Monde (J1/J2/J3 de poules, puis phases finales). Seules les journées entièrement terminées sont affichées. Couleurs identiques au graphe de cumul.</p>
 
-  <h2>Palmares — victoires de journee</h2>
+  <h2>Palmarès — victoires de journée</h2>
   <div class="card"><table id="palmares"></table></div>
 
-  <h2>Points par journee</h2>
+  <h2>Points par journée</h2>
   <div class="card">
     <div id="legend" class="legend"></div>
     <svg id="chart" class="chart" viewBox="0 0 980 360" preserveAspectRatio="xMidYMid meet"></svg>
   </div>
 
-  <h2>Detail par journee</h2>
+  <h2>Détail par journée</h2>
   <div class="card" id="days"></div>
 </div>
 <script>
-const P = {"players":["DADA3498","YozLePirate","Bazooz","Douillard_aymeri","Flomar1502"],"color":{"DADA3498":"#2a9d8f","YozLePirate":"#e76f51","Bazooz":"#5aa9e6","Douillard_aymeri":"#b07cd6","Flomar1502":"#f4b400"},"DAYS":[{"j":"J1","full":"1re journee de poules","date":"11/06-18/06","matches":["Mexique-Afrique du Sud","Corée du Sud-Tchéquie","Canada-Bosnie","États-Unis-Paraguay","Qatar-Suisse","Brésil-Maroc","Haïti-Écosse","Australie-Turquie","Allemagne-Curaçao","Pays-Bas-Japon","Côte d’Ivoire-Équateur","Suède-Tunisie","Espagne-Cap-Vert","Belgique-Égypte","Arabie saoudite-Uruguay","Iran-Nouvelle-Zélande","France-Sénégal","Irak-Norvège","Argentine-Algérie","Autriche-Jordanie","Portugal-RD Congo","Angleterre-Croatie","Ghana-Panama","Ouzbékistan-Colombie"],"ranking":[{"name":"DADA3498","pts":1082},{"name":"YozLePirate","pts":762},{"name":"Bazooz","pts":666},{"name":"Douillard_aymeri","pts":619},{"name":"Flomar1502","pts":510}],"best":1082,"winners":["DADA3498"]}],"palmares":[{"name":"DADA3498","wins":1,"total":1229},{"name":"YozLePirate","wins":0,"total":909},{"name":"Bazooz","wins":0,"total":813},{"name":"Douillard_aymeri","wins":0,"total":764},{"name":"Flomar1502","wins":0,"total":510}]};
+const P = {"players":["DADA3498","YozLePirate","Bazooz","Douillard_aymeri","Flomar1502"],"color":{"DADA3498":"#2a9d8f","YozLePirate":"#e76f51","Bazooz":"#5aa9e6","Douillard_aymeri":"#b07cd6","Flomar1502":"#f4b400"},"DAYS":[{"j":"J1","full":"1re journée de poules","date":"11/06-18/06","matches":["Mexique-Afrique du Sud","Corée du Sud-Tchéquie","Canada-Bosnie","États-Unis-Paraguay","Qatar-Suisse","Brésil-Maroc","Haïti-Écosse","Australie-Turquie","Allemagne-Curaçao","Pays-Bas-Japon","Côte d’Ivoire-Équateur","Suède-Tunisie","Espagne-Cap-Vert","Belgique-Égypte","Arabie saoudite-Uruguay","Iran-Nouvelle-Zélande","France-Sénégal","Irak-Norvège","Argentine-Algérie","Autriche-Jordanie","Portugal-RD Congo","Angleterre-Croatie","Ghana-Panama","Ouzbékistan-Colombie"],"ranking":[{"name":"DADA3498","pts":1082},{"name":"YozLePirate","pts":762},{"name":"Bazooz","pts":666},{"name":"Douillard_aymeri","pts":619},{"name":"Flomar1502","pts":510}],"best":1082,"winners":["DADA3498"]}],"palmares":[{"name":"DADA3498","wins":1,"total":1229},{"name":"YozLePirate","wins":0,"total":909},{"name":"Bazooz","wins":0,"total":813},{"name":"Douillard_aymeri","wins":0,"total":764},{"name":"Flomar1502","wins":0,"total":510}]};
 const MAXY = 1100;
 
-// --- Palmares ---
+// --- Palmarès ---
 (function(){
   const t=document.getElementById("palmares");
-  t.innerHTML='<tr><th>#</th><th>Joueur</th><th class="num">Journees gagnees</th><th class="num">Total general</th></tr>'+
+  t.innerHTML='<tr><th>#</th><th>Joueur</th><th class="num">Journées gagnées</th><th class="num">Total général</th></tr>'+
     P.palmares.map((p,i)=>'<tr><td>'+(i+1)+'</td><td><span class="dot" style="background:'+P.color[p.name]+'"></span>'+p.name+(i===0&&p.wins>0?' <span class="crown">&#9818;</span>':'')+'</td><td class="num'+(p.wins?' win':'')+'">'+p.wins+'</td><td class="num">'+p.total+'</td></tr>').join("");
 })();
 
-// --- Legende ---
+// --- Légende ---
 (function(){
   const box=document.getElementById("legend");
   box.innerHTML=P.players.map(n=>'<span class="lg"><span class="dot" style="background:'+P.color[n]+'"></span>'+n+'</span>').join("");
 })();
 
-// --- Graphe a barres groupees par journee ---
+// --- Graphe à barres groupées par journée ---
 (function(){
   const SVG="http://www.w3.org/2000/svg";
   const W=980,H=360,M={t:16,r:16,b:46,l:42};
@@ -103,7 +103,7 @@ const MAXY = 1100;
   });
 })();
 
-// --- Detail par journee ---
+// --- Détail par journée ---
 (function(){
   const box=document.getElementById("days");
   box.innerHTML=P.DAYS.map(d=>{

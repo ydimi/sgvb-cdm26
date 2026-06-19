@@ -51,7 +51,7 @@ function unlockPage(data) {
 <meta name="robots" content="noindex">
 <title>Espace Aymeric — SGVB · CdM 2026</title>
 <style>
-  :root { --bg:#0f1320; --card:#171c2c; --line:#2a3142; --txt:#e6e9f0; --muted:#8b93a7; --amber:#f59e0b; --red:#f87171; }
+  :root { --bg:#0e1116; --card:#161b22; --line:#2a313c; --txt:#e6edf3; --muted:#8b949e; --amber:#f4b400; --red:#f87171; }
   * { box-sizing:border-box; }
   body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
          font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--txt); padding:24px; }

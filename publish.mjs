@@ -52,9 +52,9 @@ const NAV_ITEMS = [
 // Pas de surlignage "page active" : la barre est la meme sur chaque page.
 const NAV_BAR = `<style>
   body { margin-top:0 !important; padding-top:0 !important; }
-  .sgvb-nav { position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e18; border-bottom:1px solid #2a3142; }
+  .sgvb-nav { position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e13; border-bottom:1px solid #2a313c; }
   .sgvb-nav .in { display:flex; gap:6px; justify-content:center; align-items:center; max-width:1000px; margin:0 auto; padding:10px 12px; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
-  .sgvb-nav a { flex:0 0 auto; color:#e6e9f0; text-decoration:none; padding:7px 11px; border-radius:8px; background:#171c2c; border:1px solid #2a3142; font:600 13px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .sgvb-nav a { flex:0 0 auto; color:#e6edf3; text-decoration:none; padding:7px 11px; border-radius:8px; background:#161b22; border:1px solid #2a313c; font:600 13px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
   .sgvb-spacer { height:58px; }
 </style>
 <nav class="sgvb-nav"><div class="in">${NAV_ITEMS.map(([href, label]) => `<a href="${href}">${label}</a>`).join("")}</div></nav>
