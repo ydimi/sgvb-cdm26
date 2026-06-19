@@ -49,24 +49,16 @@
 </style>
 </head>
 <body><style>
-  body { margin-top:0 !important; }
-  .sgvb-nav { position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e13; border-bottom:1px solid #2a313c; font:600 14px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
-  .sgvb-nav .bar { display:flex; align-items:center; justify-content:space-between; max-width:1000px; margin:0 auto; padding:8px 12px; }
-  .sgvb-nav .brand { color:#e6edf3; text-decoration:none; font-weight:700; }
-  .sgvb-nav .burger { background:#161b22; color:#e6edf3; border:1px solid #2a313c; border-radius:8px; padding:6px 11px; font-size:16px; line-height:1; cursor:pointer; }
-  .sgvb-nav .menu { display:none; position:absolute; left:0; right:0; background:#0b0e13; border-bottom:1px solid #2a313c; padding:6px 12px 12px; box-shadow:0 8px 16px rgba(0,0,0,.4); }
-  .sgvb-nav .menu .col { display:flex; flex-direction:column; gap:6px; max-width:1000px; margin:0 auto; }
-  .sgvb-nav.open .menu { display:block; }
-  .sgvb-nav .menu a { color:#e6edf3; text-decoration:none; padding:10px 12px; border-radius:8px; background:#161b22; border:1px solid #2a313c; }
+  .sgvb-burger { position:fixed; top:10px; right:10px; z-index:100000; background:#161b22; color:#e6edf3; border:1px solid #2a313c; border-radius:8px; padding:8px 12px; font-size:16px; line-height:1; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.45); }
+  .sgvb-backdrop { display:none; position:fixed; inset:0; z-index:99999; }
+  .sgvb-backdrop.open { display:block; }
+  .sgvb-menu { display:none; position:fixed; top:52px; right:10px; z-index:100000; flex-direction:column; gap:6px; min-width:210px; background:#0b0e13; border:1px solid #2a313c; border-radius:10px; padding:8px; box-shadow:0 10px 26px rgba(0,0,0,.5); }
+  .sgvb-menu.open { display:flex; }
+  .sgvb-menu a { color:#e6edf3; text-decoration:none; padding:10px 12px; border-radius:8px; background:#161b22; border:1px solid #2a313c; white-space:nowrap; font:600 14px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
 </style>
-<nav class="sgvb-nav">
-  <div class="bar">
-    <a class="brand" href="index.html">SGVB · CdM 2026</a>
-    <button class="burger" type="button" aria-label="Menu" onclick="this.closest('.sgvb-nav').classList.toggle('open')">☰</button>
-  </div>
-  <div class="menu"><div class="col"><a href="index.html">🏠 Accueil</a><a href="classement.html">📈 Classement</a><a href="histoire-du-jour.html">📖 Histoires du jour</a><a href="journees-sgvb.html">🗓️ Journées</a><a href="super-vainqueur-sgvb.html">🌌 Super vainqueur</a><a href="aym.html">🔒 Aymeric</a></div></div>
-</nav>
-<script>(function(){function p(){var b=document.querySelector('.sgvb-nav .bar');if(b)document.body.style.paddingTop=(b.offsetHeight+5)+'px';}p();window.addEventListener('resize',p);})();</script>
+<button class="sgvb-burger" type="button" aria-label="Menu" onclick="var m=document.querySelector('.sgvb-menu'),b=document.querySelector('.sgvb-backdrop');m.classList.toggle('open');b.classList.toggle('open')">☰</button>
+<div class="sgvb-backdrop" onclick="document.querySelector('.sgvb-menu').classList.remove('open');this.classList.remove('open')"></div>
+<div class="sgvb-menu"><a href="index.html">🏠 Accueil</a><a href="classement.html">📈 Classement</a><a href="histoire-du-jour.html">📖 Histoires du jour</a><a href="journees-sgvb.html">🗓️ Journées</a><a href="super-vainqueur-sgvb.html">🌌 Super vainqueur</a><a href="aym.html">🔒 Aymeric</a></div>
 <div class="wrap">
   <h1>Histoires du jour — le récit au fil des jours</h1>
   <div class="nav">
