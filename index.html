@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mondial 2026 — pronos du groupe</title>
+<style>
+  :root { --bg:#0f1320; --card:#171c2c; --line:#2a3142; --txt:#e6e9f0; --muted:#8b93a7;
+          --blue:#38bdf8; --amber:#f59e0b; --green:#34d399; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+         background:var(--bg); color:var(--txt); padding:28px 20px 48px; max-width:760px; margin:auto; }
+  header { text-align:center; margin-bottom:28px; }
+  h1 { font-size:24px; margin:0 0 6px; }
+  .sub { color:var(--muted); font-size:14px; margin:0; }
+  .grid { display:grid; gap:14px; }
+  a.card { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--txt);
+           background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px;
+           transition:border-color .15s, transform .05s; }
+  a.card:hover { border-color:var(--blue); }
+  a.card:active { transform:scale(.99); }
+  a.card.locked:hover { border-color:var(--amber); }
+  .ico { font-size:28px; flex:0 0 auto; width:40px; text-align:center; }
+  .txt { flex:1 1 auto; }
+  .txt .t { font-size:17px; font-weight:700; }
+  .txt .d { color:var(--muted); font-size:13px; }
+  .chev { color:var(--muted); font-size:20px; }
+  footer { margin-top:32px; color:var(--muted); font-size:12px; text-align:center; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>⚽ Mondial 2026 — pronos du groupe</h1>
+    <p class="sub">Classements, faits du jour et univers parallèles de la ligue SGVB.</p>
+  </header>
+
+  <div class="grid">
+    <a class="card" href="classement.html">
+      <span class="ico">📈</span>
+      <span class="txt"><span class="t">Classement</span><span class="d">Évolution des points, match par match</span></span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="card" href="journees-sgvb.html">
+      <span class="ico">🗓️</span>
+      <span class="txt"><span class="t">Journées SGVB</span><span class="d">Faits marquants et vainqueur du jour</span></span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="card" href="super-vainqueur-sgvb.html">
+      <span class="ico">🌌</span>
+      <span class="txt"><span class="t">Super vainqueur SGVB</span><span class="d">Et si tous les pronos d'un joueur tombaient juste ?</span></span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="card locked" href="aym.html">
+      <span class="ico">🔒</span>
+      <span class="txt"><span class="t">Espace Aymeric</span><span class="d">Comparateur de pronos — accès protégé par mot de passe</span></span>
+      <span class="chev">›</span>
+    </a>
+  </div>
+
+  <footer>Réservé au groupe — données mises à jour quotidiennement.</footer>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# Garde-fou etancheite : rien de prive ne doit jamais etre commite ici.
+# On ne versionne QUE les pages du site (index + pages publiques + aym.html chiffree).
+
+# Sources / donnees brutes (au cas ou un fichier serait copie par erreur)
+*.json
+*.md
+*.csv
+*.xlsx
+mpp-snapshot*
+.profile/
+node_modules/
+
+# Exceptions explicites : on garde le pense-bete
+!README.md

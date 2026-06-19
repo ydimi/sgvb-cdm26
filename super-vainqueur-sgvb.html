@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SGVB — les univers paralleles (CdM 2026)</title>
+<style>
+  :root{ --bg:#0e1116; --panel:#161b22; --grid:#2a313c; --text:#e6edf3; --muted:#8b949e; --gold:#f4b400; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:24px 18px 60px}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 16px;line-height:1.5}
+  .switch{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .switch button{background:transparent;color:var(--muted);border:1px solid var(--grid);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:7px}
+  .switch button.on{border-color:transparent;color:#fff;font-weight:600}
+  .switch .dot{width:11px;height:11px;border-radius:50%}
+  .card{background:var(--panel);border:1px solid var(--grid);border-radius:12px;padding:16px;margin-bottom:16px}
+  .uni{font-size:15px;margin:0 0 12px}
+  .uni b{color:var(--gold)}
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--grid)}
+  th{color:var(--muted);font-weight:600}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:middle}
+  .master td{color:var(--gold);font-weight:700}
+  .bar{height:6px;border-radius:3px;margin-top:3px;opacity:.85}
+  .delta{color:var(--muted);font-size:12px}
+  .story{line-height:1.6;font-size:14px}
+  .story h3{font-size:14px;margin:0 0 8px;color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>SGVB — les univers paralleles</h1>
+  <p class="sub">Et si <b>tous</b> les pronos d'un joueur se realisaient ? On choisit un "super vainqueur" : l'issue (1/N/2) de chacun de ses pronos devient le resultat reel, et chaque joueur empoche les points 1/N/2 des matchs ou il avait la meme issue. <b>Sans score exact ni bonus</b> (non calculable hors appli) : le super vainqueur fait donc 100 %. Cumul sur les journees terminees ; recit sur la derniere (J1).</p>
+  <div id="switch" class="switch"></div>
+  <div class="card" id="tableCard"></div>
+  <div class="card story" id="storyCard"></div>
+</div>
+<script>
+const P = {"players":["DADA3498","YozLePirate","Bazooz","Douillard_aymeri","Flomar1502"],"color":{"DADA3498":"#2a9d8f","YozLePirate":"#e76f51","Bazooz":"#5aa9e6","Douillard_aymeri":"#b07cd6","Flomar1502":"#f4b400"},"lastLabel":"J1","lastFull":"1re journee de poules","lastDate":"11/06-18/06","scenarios":{"DADA3498":{"ranking":[{"name":"DADA3498","pts":1585,"dJ":1585,"pct":100},{"name":"YozLePirate","pts":1027,"dJ":1027,"pct":65},{"name":"Douillard_aymeri","pts":996,"dJ":996,"pct":63},{"name":"Flomar1502","pts":956,"dJ":956,"pct":60},{"name":"Bazooz","pts":777,"dJ":777,"pct":49}],"story":"Dans l'univers de DADA, l'ordre naturel est respecte : le leader reel de J1 (1082 pts) se couronne empereur (1585). YozLePirate, fidele lieutenant, le suit a la culotte (1027) — les deux hommes cochent les memes cases comme un vieux couple qui commande toujours le meme plat. Tout en bas, Bazooz (777) : dans le monde selon DADA, l'electron libre n'a rien compris au menu. Moralite : quand DADA a raison, c'est surtout Bazooz qui pleure."},"YozLePirate":{"ranking":[{"name":"YozLePirate","pts":1727,"dJ":1727,"pct":100},{"name":"DADA3498","pts":1027,"dJ":1027,"pct":59},{"name":"Douillard_aymeri","pts":966,"dJ":966,"pct":56},{"name":"Bazooz","pts":752,"dJ":752,"pct":44},{"name":"Flomar1502","pts":514,"dJ":514,"pct":30}],"story":"Le pirate prend le trone (1727) et, surprise, c'est DADA qui lui sert de second (1027) : nos deux tetes de ligue jouent en fait la meme partition. La vraie victime ? Flomar1502, bon dernier (514), a des annees-lumiere des choix du capitaine. Dans ce monde-la, Yoz aborde tout le monde sans meme sortir l'epee — il lui suffit d'avoir eu raison."},"Bazooz":{"ranking":[{"name":"Bazooz","pts":1746,"dJ":1746,"pct":100},{"name":"Flomar1502","pts":859,"dJ":859,"pct":49},{"name":"Douillard_aymeri","pts":809,"dJ":809,"pct":46},{"name":"DADA3498","pts":777,"dJ":777,"pct":45},{"name":"YozLePirate","pts":752,"dJ":752,"pct":43}],"story":"Bienvenue dans le monde a l'envers. Bazooz, simple 3e dans la vraie vie, se couronne ici (1746) et envoie les deux favoris au tapis : DADA degringole 4e (777) et YozLePirate ferme la marche (752). Son unique compagnon de route, Flomar (859), partage ses lubies. Bazooz ne joue pas contre la ligue, il joue dans une autre dimension — et avouons-le, elle a de l'allure."},"Douillard_aymeri":{"ranking":[{"name":"Douillard_aymeri","pts":1793,"dJ":1793,"pct":100},{"name":"Flomar1502","pts":1182,"dJ":1182,"pct":66},{"name":"DADA3498","pts":996,"dJ":996,"pct":56},{"name":"YozLePirate","pts":966,"dJ":966,"pct":54},{"name":"Bazooz","pts":809,"dJ":809,"pct":45}],"story":"Record du plateau : 1793 pts pour le maitre Douillard, qui a vise haut et gros. Detail genant, dans la vraie J1 il finit 4e (619) : ses paris audacieux n'ont paye que dans son imagination. A ses cotes, Flomar (1182), camarade de tribu fidele. Bazooz, lui, est relegue au cachot (809). Douillard regne — sur un royaume que personne d'autre n'habite."},"Flomar1502":{"ranking":[{"name":"Flomar1502","pts":1517,"dJ":1517,"pct":100},{"name":"Douillard_aymeri","pts":1182,"dJ":1182,"pct":78},{"name":"DADA3498","pts":956,"dJ":956,"pct":63},{"name":"Bazooz","pts":859,"dJ":859,"pct":57},{"name":"YozLePirate","pts":514,"dJ":514,"pct":34}],"story":"Dernier de la vraie J1 (510 pts), Flomar s'offre une revanche cosmique : 1517 et le sceptre. Son allie Douillard le suit de pres (1182), preuve que les deux tapent souvent juste ensemble... ou faux ensemble, c'est selon l'univers. Le grand perdant ? YozLePirate (514), exact oppose de Flomar. Comme quoi, il suffisait d'inverser la fleche du temps pour que le petit dernier devienne calife."}},"multi":false};
+let cur = P.players[0];
+
+function render(){
+  const sc = P.scenarios[cur];
+  const maxp = Math.max(1, ...sc.ranking.map(r=>r.pts));
+  const rows = sc.ranking.map((r,i)=>{
+    const w = Math.round(100*r.pts/maxp);
+    const dj = (P.multi && r.dJ>0) ? '<span class="delta"> (+'+r.dJ+' sur '+P.lastLabel+')</span>' : (P.multi ? '<span class="delta"> (+0)</span>' : '');
+    return '<tr class="'+(r.name===cur?'master':'')+'">'+
+      '<td>'+(i+1)+'</td>'+
+      '<td><span class="dot" style="background:'+P.color[r.name]+'"></span>'+r.name+(r.name===cur?' &#9818;':'')+'</td>'+
+      '<td class="num">'+r.pts+'<div class="bar" style="width:'+w+'%;background:'+P.color[r.name]+'"></div></td>'+
+      '<td class="num">'+r.pct+'%'+dj+'</td></tr>';
+  }).join('');
+  document.getElementById('tableCard').innerHTML =
+    '<p class="uni">Univers : si tous les pronos de <b>'+cur+'</b> se realisaient</p>'+
+    '<table><tr><th>#</th><th>Joueur</th><th class="num">Points (univers)</th><th class="num">% du maitre</th></tr>'+rows+'</table>';
+  const st = sc.story && sc.story.trim() ? sc.story : '<span class="delta">(recit a generer au prochain /maj)</span>';
+  document.getElementById('storyCard').innerHTML = '<h3>'+P.lastLabel+' vue depuis l\'univers '+cur+'</h3><div>'+st+'</div>';
+  document.querySelectorAll('#switch button').forEach(b=>{
+    const on = b.dataset.n===cur; b.className = on?'on':'';
+    b.style.background = on?P.color[b.dataset.n]:'transparent';
+  });
+}
+(function(){
+  const box=document.getElementById('switch');
+  box.innerHTML = P.players.map(n=>'<button data-n="'+n+'"><span class="dot" style="background:'+P.color[n]+'"></span>'+n+'</button>').join('');
+  box.querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.n;render();});
+})();
+render();
+</script>
+</body>
+</html>

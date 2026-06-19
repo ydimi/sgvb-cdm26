@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SGVB — le meilleur par journee (CdM 2026)</title>
+<style>
+  :root{ --bg:#0e1116; --panel:#161b22; --grid:#2a313c; --text:#e6edf3; --muted:#8b949e; --gold:#f4b400; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:24px 18px 60px}
+  h1{font-size:22px;margin:0 0 4px}
+  h2{font-size:16px;margin:26px 0 10px;color:var(--text)}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+  .card{background:var(--panel);border:1px solid var(--grid);border-radius:12px;padding:16px;margin-bottom:18px}
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--grid)}
+  th{color:var(--muted);font-weight:600}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:middle}
+  .win{color:var(--gold);font-weight:700}
+  .crown{color:var(--gold)}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+  .lg{display:flex;align-items:center;gap:7px;font-size:13px;padding:5px 10px;border:1px solid var(--grid);border-radius:999px}
+  .chart{width:100%;height:auto;display:block}
+  svg text{fill:var(--muted);font-size:11px}
+  .axis-line{stroke:var(--grid);stroke-width:1}
+  .grid-line{stroke:var(--grid);stroke-width:1;stroke-dasharray:3 4;opacity:.55}
+  .dayblock{margin-bottom:14px}
+  .dayhead{font-weight:600;margin:0 0 2px}
+  .daymatches{color:var(--muted);font-size:12px;margin:0 0 8px}
+  .pill{display:inline-block;font-size:11px;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:1px 8px;margin-left:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>SGVB — le meilleur par journee</h1>
+  <p class="sub">Points gagnes par journee de Coupe du Monde (J1/J2/J3 de poules, puis phases finales). Seules les journees entierement terminees sont affichees. Couleurs identiques au graphe de cumul.</p>
+
+  <h2>Palmares — victoires de journee</h2>
+  <div class="card"><table id="palmares"></table></div>
+
+  <h2>Points par journee</h2>
+  <div class="card">
+    <div id="legend" class="legend"></div>
+    <svg id="chart" class="chart" viewBox="0 0 980 360" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <h2>Detail par journee</h2>
+  <div class="card" id="days"></div>
+</div>
+<script>
+const P = {"players":["DADA3498","YozLePirate","Douillard_aymeri","Bazooz","Flomar1502"],"color":{"DADA3498":"#2a9d8f","YozLePirate":"#e76f51","Douillard_aymeri":"#5aa9e6","Bazooz":"#b07cd6","Flomar1502":"#f4b400"},"DAYS":[{"j":"J1","full":"1re journee de poules","date":"11/06-18/06","matches":["Mexique-Afrique du Sud","Corée du Sud-Tchéquie","Canada-Bosnie","États-Unis-Paraguay","Qatar-Suisse","Brésil-Maroc","Haïti-Écosse","Australie-Turquie","Allemagne-Curaçao","Pays-Bas-Japon","Côte d’Ivoire-Équateur","Suède-Tunisie","Espagne-Cap-Vert","Belgique-Égypte","Arabie saoudite-Uruguay","Iran-Nouvelle-Zélande","France-Sénégal","Irak-Norvège","Argentine-Algérie","Autriche-Jordanie","Portugal-RD Congo","Angleterre-Croatie","Ghana-Panama","Ouzbékistan-Colombie"],"ranking":[{"name":"DADA3498","pts":1082},{"name":"YozLePirate","pts":762},{"name":"Bazooz","pts":666},{"name":"Douillard_aymeri","pts":619},{"name":"Flomar1502","pts":510}],"best":1082,"winners":["DADA3498"]}],"palmares":[{"name":"DADA3498","wins":1,"total":1158},{"name":"YozLePirate","wins":0,"total":838},{"name":"Douillard_aymeri","wins":0,"total":764},{"name":"Bazooz","wins":0,"total":742},{"name":"Flomar1502","wins":0,"total":510}]};
+const MAXY = 1100;
+
+// --- Palmares ---
+(function(){
+  const t=document.getElementById("palmares");
+  t.innerHTML='<tr><th>#</th><th>Joueur</th><th class="num">Journees gagnees</th><th class="num">Total general</th></tr>'+
+    P.palmares.map((p,i)=>'<tr><td>'+(i+1)+'</td><td><span class="dot" style="background:'+P.color[p.name]+'"></span>'+p.name+(i===0&&p.wins>0?' <span class="crown">&#9818;</span>':'')+'</td><td class="num'+(p.wins?' win':'')+'">'+p.wins+'</td><td class="num">'+p.total+'</td></tr>').join("");
+})();
+
+// --- Legende ---
+(function(){
+  const box=document.getElementById("legend");
+  box.innerHTML=P.players.map(n=>'<span class="lg"><span class="dot" style="background:'+P.color[n]+'"></span>'+n+'</span>').join("");
+})();
+
+// --- Graphe a barres groupees par journee ---
+(function(){
+  const SVG="http://www.w3.org/2000/svg";
+  const W=980,H=360,M={t:16,r:16,b:46,l:42};
+  const plotW=W-M.l-M.r, plotH=H-M.t-M.b;
+  const chart=document.getElementById("chart");
+  const el=(t,a)=>{const e=document.createElementNS(SVG,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  const y=v=>M.t+plotH-plotH*(v/MAXY);
+  // grille Y
+  for(let v=0;v<=MAXY;v+=50){
+    chart.appendChild(el("line",{x1:M.l,y1:y(v),x2:W-M.r,y2:y(v),class:v===0?"axis-line":"grid-line"}));
+    const tx=el("text",{x:M.l-8,y:y(v)+4,"text-anchor":"end"});tx.textContent=v;chart.appendChild(tx);
+  }
+  const n=P.DAYS.length, np=P.players.length;
+  const slot=plotW/n, barGroup=slot*0.7, bw=barGroup/np;
+  P.DAYS.forEach((d,di)=>{
+    const x0=M.l+slot*di+(slot-barGroup)/2;
+    P.players.forEach((name,pi)=>{
+      const r=d.ranking.find(rr=>rr.name===name);const v=r?r.pts:0;
+      const bx=x0+bw*pi, bh=plotH*(v/MAXY);
+      const isWin=d.winners.includes(name);
+      chart.appendChild(el("rect",{x:bx,y:y(v),width:Math.max(1,bw-1),height:bh,fill:P.color[name],opacity:isWin?1:0.5,rx:1}));
+      if(isWin&&v>0){const c=el("text",{x:bx+bw/2,y:y(v)-3,"text-anchor":"middle","font-size":9,fill:"#f4b400"});c.textContent="\u2605";chart.appendChild(c);}
+    });
+    const lx=el("text",{x:M.l+slot*di+slot/2,y:M.t+plotH+16,"text-anchor":"middle",fill:"#c9d1d9"});lx.textContent=d.j;chart.appendChild(lx);
+    const dt=el("text",{x:M.l+slot*di+slot/2,y:M.t+plotH+30,"text-anchor":"middle",fill:"#6b7280","font-size":10});dt.textContent=d.date;chart.appendChild(dt);
+  });
+})();
+
+// --- Detail par journee ---
+(function(){
+  const box=document.getElementById("days");
+  box.innerHTML=P.DAYS.map(d=>{
+    const rows=d.ranking.map((r,i)=>{
+      const isWin=d.winners.includes(r.name);
+      return '<tr><td>'+(i+1)+'</td><td><span class="dot" style="background:'+P.color[r.name]+'"></span>'+r.name+(isWin&&r.pts>0?' <span class="crown">&#9733;</span>':'')+'</td><td class="num'+(isWin&&r.pts>0?' win':'')+'">'+r.pts+'</td></tr>';
+    }).join("");
+    const wl=d.winners.length?d.winners.join(", "):"--";
+    return '<div class="dayblock"><div class="dayhead">'+d.j+' &mdash; '+d.full+' ('+d.date+')'+
+      '<span class="pill">meilleur : '+wl+' ('+d.best+' pts)</span></div>'+
+      '<div class="daymatches">'+d.matches.join(" &middot; ")+'</div>'+
+      '<table><tr><th>#</th><th>Joueur</th><th class="num">Pts du jour</th></tr>'+rows+'</table></div>';
+  }).join("");
+})();
+</script>
+</body>
+</html>
