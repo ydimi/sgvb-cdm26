@@ -51,7 +51,9 @@ function navHtml(active) {
     const col = on ? "#1a1205" : "#e6e9f0";
     return `<a href="${href}" style="color:${col};text-decoration:none;white-space:nowrap;padding:7px 11px;border-radius:8px;background:${bg};border:1px solid #2a3142;font-weight:600;">${label}</a>`;
   };
-  return `<nav style="position:sticky;top:0;z-index:99999;display:flex;gap:6px;align-items:center;overflow-x:auto;background:#0b0e18;border-bottom:1px solid #2a3142;padding:8px 12px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:13px;-webkit-overflow-scrolling:touch;">${NAV_ITEMS.map(link).join("")}</nav>`;
+  // max-width + margin auto : menu centre et identique sur TOUTES les pages
+  // (independant du fait que le <body> de la page soit centre ou pleine largeur).
+  return `<nav style="position:sticky;top:0;z-index:99999;display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;max-width:1000px;margin:0 auto;background:#0b0e18;border-bottom:1px solid #2a3142;padding:10px 12px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:13px;">${NAV_ITEMS.map(link).join("")}</nav>`;
 }
 function injectNav(html, active) {
   const nav = navHtml(active);
