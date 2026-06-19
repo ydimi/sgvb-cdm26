@@ -49,7 +49,7 @@ function unlockPage(data) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Espace Aymeric — accès protégé</title>
+<title>Espace Aymeric — SGVB · CdM 2026</title>
 <style>
   :root { --bg:#0f1320; --card:#171c2c; --line:#2a3142; --txt:#e6e9f0; --muted:#8b93a7; --amber:#f59e0b; --red:#f87171; }
   * { box-sizing:border-box; }
