@@ -104,4 +104,4 @@ fs.writeFileSync(path.join(HERE, AYM_OUT), page);
 console.log(`chiffré : ${AYM_OUT} (${(page.length / 1024).toFixed(1)} Ko)`);
 
 console.log(`\nOK -> ${copied} page(s) publique(s) + 1 page chiffrée.`);
-console.log(`Prochaine étape : git add -A && git commit && git push  (ou simplement ./deploy.sh qui fait tout)`);
+console.log(`Prochaine étape : git add -A && git commit && git push  (ou la commande Claude /publie-site)`);

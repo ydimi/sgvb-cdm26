@@ -23,12 +23,12 @@ prono ou snapshot personnel n'est jamais copié. Le `.gitignore` bloque en plus 
 #    - dans ~/work/custom/wc26 : /maj      (classement, histoires, journées, super-vainqueur)
 #    - dans ~/work/custom/aym  : /maj-aym  (dashboard.html)
 
-# 2. Publier + déployer en une commande
-cd ~/work/custom/sgvb-cdm26
-./deploy.sh
+# 2. Publier + déployer : commande /publie-site depuis la fenêtre Claude
+#    (ou manuellement : node publish.mjs puis git add/commit/push)
 ```
 
-`deploy.sh` lance `publish.mjs` (copie liste blanche + chiffre la page Aymeric), puis commit + push.
+La commande Claude **/publie-site** lance `publish.mjs` (copie liste blanche + chiffre la page
+Aymeric), puis commit + push. GitHub Pages déploie automatiquement en ~30 s.
 
 ## Mot de passe de la page Aymeric
 
