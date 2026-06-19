@@ -1,8 +1,8 @@
-# mondial-site
+# sgvb-cdm26
 
 Petit site statique pour partager les dashboards du Mondial 2026 avec le groupe, et donner à
 Aymeric une page dédiée protégée par mot de passe. Hébergé sur **GitHub Pages** (déploiement
-automatique à chaque `git push` sur `main`).
+automatique à chaque `git push` sur `main`). En ligne : https://ydimi.github.io/sgvb-cdm26/
 
 ## Contenu
 
@@ -24,7 +24,7 @@ prono ou snapshot personnel n'est jamais copié. Le `.gitignore` bloque en plus 
 #    - dans ~/work/custom/aym  : /maj-aym  (dashboard.html)
 
 # 2. Publier
-cd ~/work/custom/mondial-site
+cd ~/work/custom/sgvb-cdm26
 AYM_PASSWORD='le-mot-de-passe' node publish.mjs
 
 # 3. Déployer
@@ -37,7 +37,7 @@ Le mot de passe d'Aymeric n'est **jamais** stocké dans le repo : il sert unique
 ## Test local
 
 ```bash
-cd ~/work/custom/mondial-site
+cd ~/work/custom/sgvb-cdm26
 python3 -m http.server 8080   # crypto.subtle exige un contexte sûr (localhost l'est)
 # ouvrir http://localhost:8080
 ```
