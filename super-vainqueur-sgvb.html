@@ -40,12 +40,23 @@
 </head>
 <body><style>
   body { margin-top:0 !important; }
-  .sgvb-nav { position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e13; border-bottom:1px solid #2a313c; }
-  .sgvb-nav .in { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; max-width:1000px; margin:0 auto; padding:8px 10px; }
-  .sgvb-nav a { color:#e6edf3; text-decoration:none; padding:6px 10px; border-radius:8px; background:#161b22; border:1px solid #2a313c; white-space:nowrap; font:600 13px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .sgvb-nav { position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e13; border-bottom:1px solid #2a313c; font:600 14px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .sgvb-nav .bar { display:flex; align-items:center; justify-content:space-between; max-width:1000px; margin:0 auto; padding:8px 12px; }
+  .sgvb-nav .brand { color:#e6edf3; text-decoration:none; font-weight:700; }
+  .sgvb-nav .burger { background:#161b22; color:#e6edf3; border:1px solid #2a313c; border-radius:8px; padding:6px 11px; font-size:16px; line-height:1; cursor:pointer; }
+  .sgvb-nav .menu { display:none; position:absolute; left:0; right:0; background:#0b0e13; border-bottom:1px solid #2a313c; padding:6px 12px 12px; box-shadow:0 8px 16px rgba(0,0,0,.4); }
+  .sgvb-nav .menu .col { display:flex; flex-direction:column; gap:6px; max-width:1000px; margin:0 auto; }
+  .sgvb-nav.open .menu { display:block; }
+  .sgvb-nav .menu a { color:#e6edf3; text-decoration:none; padding:10px 12px; border-radius:8px; background:#161b22; border:1px solid #2a313c; }
 </style>
-<nav class="sgvb-nav"><div class="in"><a href="index.html">🏠 Accueil</a><a href="classement.html">📈 Classement</a><a href="histoire-du-jour.html">📖 Histoires du jour</a><a href="journees-sgvb.html">🗓️ Journées</a><a href="super-vainqueur-sgvb.html">🌌 Super vainqueur</a><a href="aym.html">🔒 Aymeric</a></div></nav>
-<script>(function(){function p(){var n=document.querySelector('.sgvb-nav');if(n)document.body.style.paddingTop=(n.offsetHeight+6)+'px';}p();window.addEventListener('resize',p);})();</script>
+<nav class="sgvb-nav">
+  <div class="bar">
+    <a class="brand" href="index.html">SGVB · CdM 2026</a>
+    <button class="burger" type="button" aria-label="Menu" onclick="this.closest('.sgvb-nav').classList.toggle('open')">☰</button>
+  </div>
+  <div class="menu"><div class="col"><a href="index.html">🏠 Accueil</a><a href="classement.html">📈 Classement</a><a href="histoire-du-jour.html">📖 Histoires du jour</a><a href="journees-sgvb.html">🗓️ Journées</a><a href="super-vainqueur-sgvb.html">🌌 Super vainqueur</a><a href="aym.html">🔒 Aymeric</a></div></div>
+</nav>
+<script>(function(){function p(){var b=document.querySelector('.sgvb-nav .bar');if(b)document.body.style.paddingTop=(b.offsetHeight+5)+'px';}p();window.addEventListener('resize',p);})();</script>
 <div class="wrap">
   <h1>Super vainqueur — les univers parallèles</h1>
   <p class="sub">Et si <b>tous</b> les pronos d'un joueur se réalisaient ? On choisit un "super vainqueur" : l'issue (1/N/2) de chacun de ses pronos devient le résultat réel, et chaque joueur empoche les points 1/N/2 des matchs où il avait la même issue. <b>Sans score exact ni bonus</b> (non calculable hors appli) : le super vainqueur fait donc 100 %. Choisis un super vainqueur ci-dessous, puis fais défiler les journées du Mondial avec les flèches (← →).</p>
