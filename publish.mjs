@@ -50,21 +50,34 @@ const NAV_ITEMS = [
 // pages), boutons centres dans une colonne de 1000px. On neutralise le padding-top
 // du body de la page hote + un espaceur, pour un rendu STRICTEMENT identique partout.
 // Pas de surlignage "page active" : la barre est la meme sur chaque page.
-// Bouton hamburger FLOTTANT (haut-droite), sans barre de titre permanente : il ne prend
-// quasiment pas de place et laisse tout l'ecran au contenu (utile en paysage pour les graphes).
-// Le menu s'ouvre en petit panneau au tap ; clic a cote (backdrop) pour fermer. Aucun decalage
-// du contenu (le bouton flotte par-dessus).
+// Navigation responsive :
+//  - mobile / paysage tel (< 1000px) : bouton hamburger FLOTTANT (haut-droite), menu en panneau
+//    au tap, aucun decalage du contenu -> tout l'ecran reste dispo pour les graphes ;
+//  - desktop (>= 1000px) : menu classique en barre fixe pleine largeur, pas de hamburger.
+const NAV_LINKS = NAV_ITEMS.map(([href, label]) => `<a href="${href}">${label}</a>`).join("");
 const NAV_BAR = `<style>
+  /* Mobile (defaut) : hamburger flottant */
+  .sgvb-bar { display:none; }
   .sgvb-burger { position:fixed; top:10px; right:10px; z-index:100000; background:#161b22; color:#e6edf3; border:1px solid #2a313c; border-radius:8px; padding:8px 12px; font-size:16px; line-height:1; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.45); }
   .sgvb-backdrop { display:none; position:fixed; inset:0; z-index:99999; }
   .sgvb-backdrop.open { display:block; }
   .sgvb-menu { display:none; position:fixed; top:52px; right:10px; z-index:100000; flex-direction:column; gap:6px; min-width:210px; background:#0b0e13; border:1px solid #2a313c; border-radius:10px; padding:8px; box-shadow:0 10px 26px rgba(0,0,0,.5); }
   .sgvb-menu.open { display:flex; }
-  .sgvb-menu a { color:#e6edf3; text-decoration:none; padding:10px 12px; border-radius:8px; background:#161b22; border:1px solid #2a313c; white-space:nowrap; font:600 14px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .sgvb-menu a, .sgvb-bar a { color:#e6edf3; text-decoration:none; border-radius:8px; background:#161b22; border:1px solid #2a313c; white-space:nowrap; font:600 13px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .sgvb-menu a { padding:10px 12px; }
+  /* Desktop : barre classique, pas de hamburger */
+  @media (min-width:1000px) {
+    body { padding-top:54px !important; }
+    .sgvb-burger, .sgvb-backdrop, .sgvb-menu { display:none !important; }
+    .sgvb-bar { display:block; position:fixed; top:0; left:0; right:0; z-index:99999; background:#0b0e13; border-bottom:1px solid #2a313c; }
+    .sgvb-bar .in { display:flex; gap:6px; justify-content:center; align-items:center; max-width:1000px; margin:0 auto; padding:9px 12px; }
+    .sgvb-bar a { padding:7px 11px; }
+  }
 </style>
+<div class="sgvb-bar"><div class="in">${NAV_LINKS}</div></div>
 <button class="sgvb-burger" type="button" aria-label="Menu" onclick="var m=document.querySelector('.sgvb-menu'),b=document.querySelector('.sgvb-backdrop');m.classList.toggle('open');b.classList.toggle('open')">☰</button>
 <div class="sgvb-backdrop" onclick="document.querySelector('.sgvb-menu').classList.remove('open');this.classList.remove('open')"></div>
-<div class="sgvb-menu">${NAV_ITEMS.map(([href, label]) => `<a href="${href}">${label}</a>`).join("")}</div>`;
+<div class="sgvb-menu">${NAV_LINKS}</div>`;
 function injectNav(html) {
   return /<body[^>]*>/i.test(html) ? html.replace(/<body[^>]*>/i, (m) => m + NAV_BAR) : NAV_BAR + html;
 }
