@@ -19,6 +19,8 @@ const PUBLIC_FILES = [
   { from: path.join(CUSTOM, "wc26", "classement.html"), to: "classement.html" },
   { from: path.join(CUSTOM, "wc26", "histoire-du-jour.html"), to: "histoire-du-jour.html" },
   { from: path.join(CUSTOM, "wc26", "journees-sgvb.html"), to: "journees-sgvb.html" },
+  { from: path.join(CUSTOM, "wc26", "profils-sgvb.html"), to: "profils-sgvb.html" },
+  { from: path.join(CUSTOM, "wc26", "super-flybad-z.html"), to: "super-flybad-z.html" },
   { from: path.join(CUSTOM, "wc26", "super-vainqueur-sgvb.html"), to: "super-vainqueur-sgvb.html" },
 ];
 
@@ -43,6 +45,8 @@ const NAV_ITEMS = [
   ["classement.html", "📈 Classement"],
   ["histoire-du-jour.html", "📖 Histoires du jour"],
   ["journees-sgvb.html", "🗓️ Journées"],
+  ["profils-sgvb.html", "👤 Profils"],
+  ["super-flybad-z.html", "🐉 Super Flybad Z"],
   ["super-vainqueur-sgvb.html", "🌌 Super vainqueur"],
   ["aym.html", "🔒 Aymeric"],
 ];
