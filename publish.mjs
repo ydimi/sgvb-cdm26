@@ -24,6 +24,18 @@ const PUBLIC_FILES = [
   { from: path.join(CUSTOM, "wc26", "super-vainqueur-sgvb.html"), to: "super-vainqueur-sgvb.html" },
 ];
 
+// --- Assets PUBLICS (images referencees par les pages ci-dessus) -----------
+// Meme regle d'etancheite : fichiers nommes explicitement, jamais un dossier copie
+// en aveugle. Les pages Profils / Super Flybad Z affichent ces images (sinon placeholder).
+const PUBLIC_ASSETS = [
+  "assets/super-flybad-z.png",
+  "assets/profils/dada3498.png",
+  "assets/profils/yozlepirate.png",
+  "assets/profils/bazooz.png",
+  "assets/profils/douillardaymeri.png",
+  "assets/profils/flomar1502.png",
+].map((rel) => ({ from: path.join(CUSTOM, "wc26", rel), to: rel }));
+
 // --- Page chiffree d'Aymeric ----------------------------------------------
 const AYM_SRC = path.join(CUSTOM, "aym", "dashboard.html");
 const AYM_OUT = "aym.html";
@@ -98,6 +110,20 @@ for (const f of PUBLIC_FILES) {
   fs.writeFileSync(path.join(HERE, f.to), injectNav(raw));
   console.log(`copié   : ${f.to} (+ menu)`);
   copied++;
+}
+
+// Assets : copie binaire telle quelle (pas d'injection de menu).
+for (const a of PUBLIC_ASSETS) {
+  assertPublic(path.basename(a.from));
+  if (!fs.existsSync(a.from)) {
+    console.error(`ABANDON : asset attendu introuvable : ${a.from}`);
+    console.error(`  -> verifie la presence de l'image dans wc26/assets/ avant de publier.`);
+    process.exit(1);
+  }
+  const dest = path.join(HERE, a.to);
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.copyFileSync(a.from, dest);
+  console.log(`asset   : ${a.to}`);
 }
 
 // Page d'accueil : generee depuis le template, avec le MEME menu injecte.

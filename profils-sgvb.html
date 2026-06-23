@@ -15,12 +15,10 @@
   .switch button{background:transparent;color:var(--muted);border:1px solid var(--grid);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:7px}
   .switch button.on{border-color:transparent;color:#fff;font-weight:700}
   .switch .dot{width:11px;height:11px;border-radius:50%}
-  .hero{display:flex;gap:18px;align-items:center;margin:0 0 16px;flex-wrap:wrap}
-  .hero img{width:140px;height:140px;border-radius:14px;object-fit:cover;border:2px solid var(--grid)}
-  .hero img.fus{border-color:var(--fus);box-shadow:0 0 26px rgba(255,112,166,.4)}
-  .hero .ph{width:140px;height:140px;border-radius:14px;border:2px dashed var(--grid);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;text-align:center;padding:8px}
-  .hero h2{font-size:24px;margin:0 0 4px}
-  .hero .role{color:var(--muted);font-size:13px;line-height:1.5}
+  .hero{display:flex;justify-content:center;margin:0 0 18px}
+  .hero img{width:340px;max-width:84%;height:auto;border-radius:16px;border:2px solid var(--grid);display:block}
+  .hero img.fus{border-color:var(--fus);box-shadow:0 0 30px rgba(255,112,166,.45)}
+  .hero .ph{width:340px;max-width:84%;aspect-ratio:3/4;border-radius:16px;border:2px dashed var(--grid);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;text-align:center;padding:14px}
   .nav{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 16px}
   .nav button{background:var(--panel);color:var(--text);border:1px solid var(--grid);border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer;line-height:1}
   .nav button:hover:not(:disabled){background:#1f6feb;border-color:#1f6feb}
@@ -105,14 +103,10 @@ const isFus=()=>cur===P.FUSION;
 const days=()=>P.profiles[cur];
 
 function heroHTML(){
-  const s=sel();const ph='<div class="ph">Image à générer<br>(assets/profils/'+s.key+'.png)</div>';
-  const img=isFus()
-    ? '<img class="fus" src="assets/super-flybad-z.png" alt="'+esc(s.label)+'" onerror="this.outerHTML=\'<div class=ph>Image fusion<br>(assets/super-flybad-z.png)</div>\'">'
+  const s=sel();
+  return isFus()
+    ? '<img class="fus" src="assets/super-flybad-z.png" alt="'+esc(s.label)+'" onerror="this.outerHTML=\'<div class=ph>Image fusion à générer<br>(assets/super-flybad-z.png)</div>\'">'
     : '<img src="assets/profils/'+s.key+'.png" alt="'+esc(s.label)+'" onerror="this.outerHTML=\'<div class=ph>Image à générer<br>(assets/profils/'+s.key+'.png)</div>\'">';
-  const role=isFus()
-    ? 'La fusion ultime des cinq — elle prend le meilleur résultat de chacun, à chaque match.'
-    : 'Pronostiqueur SGVB. Profil dressé journée par journée, d\'après ses pronos réels.';
-  return img+'<div><h2 style="color:'+s.color+'">'+(isFus()?'⚡ ':'')+esc(s.label)+'</h2><div class="role">'+role+'</div></div>';
 }
 
 function playerStats(d){
