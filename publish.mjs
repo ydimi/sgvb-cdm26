@@ -17,6 +17,7 @@ const CUSTOM = path.resolve(HERE, "..");
 // --- Liste blanche : fichiers PUBLICS copies tels quels --------------------
 const PUBLIC_FILES = [
   { from: path.join(CUSTOM, "wc26", "classement.html"), to: "classement.html" },
+  { from: path.join(CUSTOM, "wc26", "tableau-final.html"), to: "tableau-final.html" },
   { from: path.join(CUSTOM, "wc26", "histoire-du-jour.html"), to: "histoire-du-jour.html" },
   { from: path.join(CUSTOM, "wc26", "journees-sgvb.html"), to: "journees-sgvb.html" },
   { from: path.join(CUSTOM, "wc26", "profils-sgvb.html"), to: "profils-sgvb.html" },
@@ -36,12 +37,26 @@ const PUBLIC_ASSETS = [
   "assets/profils/flomar1502.png",
 ].map((rel) => ({ from: path.join(CUSTOM, "wc26", rel), to: rel }));
 
+// Drapeaux des equipes affiches par la page "Phases finales" (tableau-final.html).
+// Meme regle d'etancheite : on enumere chaque fichier, jamais de copie de dossier en aveugle.
+const PUBLIC_FLAGS = [
+  "ar", "at", "au", "ba", "be", "br", "ca", "cd", "ch", "ci", "co", "cv",
+  "de", "dz", "ec", "eg", "es", "fr", "gb-eng", "gh", "hr", "jp", "ma", "mx",
+  "nl", "no", "pt", "py", "se", "sn", "us", "za",
+].map((code) => ({
+  from: path.join(CUSTOM, "wc26", "assets", "flags", `${code}.png`),
+  to: path.join("assets", "flags", `${code}.png`),
+}));
+
 // --- Page chiffree d'Aymeric ----------------------------------------------
 const AYM_SRC = path.join(CUSTOM, "aym", "dashboard.html");
 const AYM_OUT = "aym.html";
 
 // Noms reputes PRIVES : garde-fou, on refuse de publier quoi que ce soit qui matche.
-const FORBIDDEN = /(methode|strategie|pronos|tableau-final|analyses|classements|suivi|snapshot|\.profile|recherche)/i;
+// NB : "tableau-final" n'est PLUS interdit -> tableau-final.html est une page publique
+// (Phases finales). L'etancheite reste assuree par la liste blanche PUBLIC_FILES :
+// le .md d'analyse n'y figure pas, donc il n'est jamais copie.
+const FORBIDDEN = /(methode|strategie|pronos|analyses|classements|suivi|snapshot|\.profile|recherche)/i;
 
 function assertPublic(name) {
   if (FORBIDDEN.test(name)) {
@@ -55,6 +70,7 @@ function assertPublic(name) {
 const NAV_ITEMS = [
   ["index.html", "🏠 Accueil"],
   ["classement.html", "📈 Classement"],
+  ["tableau-final.html", "🏆 Phases finales"],
   ["histoire-du-jour.html", "📖 Histoires du jour"],
   ["journees-sgvb.html", "🗓️ Journées"],
   ["profils-sgvb.html", "👤 Profils"],
@@ -113,7 +129,7 @@ for (const f of PUBLIC_FILES) {
 }
 
 // Assets : copie binaire telle quelle (pas d'injection de menu).
-for (const a of PUBLIC_ASSETS) {
+for (const a of [...PUBLIC_ASSETS, ...PUBLIC_FLAGS]) {
   assertPublic(path.basename(a.from));
   if (!fs.existsSync(a.from)) {
     console.error(`ABANDON : asset attendu introuvable : ${a.from}`);
