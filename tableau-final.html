@@ -2,13 +2,15 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1116">
 <title>Tableau final — CdM 2026 · SGVB</title>
 <style>
   :root{ --bg:#0e1116; --panel:#161b22; --grid:#2a313c; --text:#e6edf3; --muted:#8b949e; --gold:#f4b400; }
   *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(circle at 50% 42%,#1a2030 0%,var(--bg) 70%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-  .wrap{max-width:1040px;margin:0 auto;padding:22px 16px 60px}
+  html{background:var(--bg)} /* iOS : l'overscroll et le letterboxing paysage montrent le canvas -> le peindre en sombre */
+  body{margin:0;min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 50% 42%,#1a2030 0%,var(--bg) 70%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:22px max(16px, env(safe-area-inset-right)) 60px max(16px, env(safe-area-inset-left))}
   h1{font-size:23px;margin:0 0 2px;text-align:center}
   .sub{color:var(--muted);font-size:13px;text-align:center;margin:0 0 14px}
   .legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 12px;font-size:12.5px;color:var(--muted)}
@@ -39,7 +41,7 @@
   .view.off{display:none}
   .board{position:relative}
   svg.bracket{width:100%;height:auto;display:block;overflow:hidden}
-  .treewrap{overflow-x:auto;margin:0 calc(50% - 50vw);padding:0 14px} /* pleine largeur d'ecran, centre */
+  .treewrap{overflow-x:auto;margin:0 calc(50% - 50vw);padding:0 max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left))} /* pleine largeur d'ecran, centre */
   svg.tree{min-width:1150px;max-width:1340px;width:100%;height:auto;display:block;margin:0 auto}
   /* roue */
   .lnk{stroke:var(--grid);stroke-width:1.4;fill:none}
@@ -108,16 +110,16 @@
 <div class="wrap">
   <h1>Tableau final — Coupe du Monde 2026</h1>
   <p class="sub">Des 16es de finale à la finale &middot; mis à jour le 04/07 05:34</p>
-  <div class="legend">
-    <span class="lg"><span class="line" style="background:var(--gold)"></span>parcours des qualifiés</span>
-    <span class="lg"><span class="elimchip">&times;</span>équipe éliminée</span>
-    <span class="lg"><span class="dot" style="background:#30363d"></span>qualifié à venir</span>
-  </div>
   <div class="modes" role="tablist">
     <button type="button" data-mode="roue" class="on">Roue</button>
     <button type="button" data-mode="arbre">Arbre</button>
   </div>
   <div id="view-roue" class="view">
+    <div class="legend">
+      <span class="lg"><span class="line" style="background:var(--gold)"></span>parcours des qualifiés</span>
+      <span class="lg"><span class="elimchip">&times;</span>équipe éliminée</span>
+      <span class="lg"><span class="dot" style="background:#30363d"></span>qualifié à venir</span>
+    </div>
     <div class="zoomctl">
       <div class="slider">
         <input type="range" id="zoom" min="0" max="3" step="1" value="0" aria-label="Niveau de zoom du tableau">
