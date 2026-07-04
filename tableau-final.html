@@ -15,11 +15,17 @@
   .lg{display:flex;align-items:center;gap:6px}
   .lg .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
   .lg .line{width:18px;height:3px;border-radius:2px;display:inline-block}
-  .zoomctl{display:flex;flex-direction:column;align-items:center;gap:4px;margin:0 0 6px}
-  .zoomctl .rail{display:flex;align-items:center;gap:12px;width:min(440px,92%)}
-  .zoomctl .rail span{color:var(--muted);font-size:11.5px;font-weight:600;letter-spacing:.4px;white-space:nowrap}
-  .zoomctl input[type=range]{flex:1;accent-color:var(--gold);cursor:pointer;height:22px}
-  .zoomctl .lvl{font-size:13px;font-weight:700;color:var(--gold);letter-spacing:.3px}
+  .zoomctl{display:flex;justify-content:center;margin:2px 0 10px}
+  .zoomctl .slider{position:relative;width:min(440px,92%);padding-bottom:30px}
+  .zoomctl input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer;height:22px;margin:0}
+  /* reperes cliquables alignes sur les crans du curseur (le pouce voyage sur largeur - ~16px) */
+  .zoomctl .ticks{position:absolute;left:0;right:0;top:24px;height:26px}
+  .zoomctl .tick{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:3px;
+    color:var(--muted);font-size:11.5px;font-weight:600;letter-spacing:.3px;white-space:nowrap;cursor:pointer;user-select:none}
+  .zoomctl .tick i{display:block;width:2px;height:7px;background:var(--grid);border-radius:1px}
+  .zoomctl .tick:hover{color:var(--text)}
+  .zoomctl .tick.on{color:var(--gold)}
+  .zoomctl .tick.on i{background:var(--gold)}
   .board{position:relative}
   svg.bracket{width:100%;height:auto;display:block;overflow:hidden}
   .lnk{stroke:var(--grid);stroke-width:1.4}
@@ -83,12 +89,15 @@
     <span class="lg"><span class="dot" style="background:#30363d"></span>qualifié à venir</span>
   </div>
   <div class="zoomctl">
-    <div class="rail">
-      <span>16es</span>
+    <div class="slider">
       <input type="range" id="zoom" min="0" max="3" step="1" value="0" aria-label="Niveau de zoom du tableau">
-      <span>Demies</span>
+      <div class="ticks">
+        <span class="tick" data-l="0" style="left:calc(8px + (100% - 16px)*0)"><i></i>16es</span>
+        <span class="tick" data-l="1" style="left:calc(8px + (100% - 16px)*0.3333)"><i></i>8es</span>
+        <span class="tick" data-l="2" style="left:calc(8px + (100% - 16px)*0.6667)"><i></i>Quarts</span>
+        <span class="tick" data-l="3" style="left:calc(8px + (100% - 16px)*1)"><i></i>Demies</span>
+      </div>
     </div>
-    <div class="lvl" id="lvlname"></div>
   </div>
   <div class="board">
     <svg class="bracket" viewBox="0 0 940 940" preserveAspectRatio="xMidYMid meet">
@@ -171,9 +180,14 @@ function applyLevel(L, dur){
   }
   raf=requestAnimationFrame(frame);
 }
-const zoom=$id('zoom'), lvlname=$id('lvlname');
-function setLevel(L, dur){ lvlname.textContent='Vue : '+LEVEL_NAME[L]; applyLevel(L, dur); }
+const zoom=$id('zoom');
+const ticks=[...document.querySelectorAll('.zoomctl .tick')];
+function setLevel(L, dur){
+  ticks.forEach(t=>t.classList.toggle('on', LEVELS[+t.dataset.l]===L));
+  applyLevel(L, dur);
+}
 zoom.addEventListener('input', ()=>setLevel(LEVELS[+zoom.value], 650));
+ticks.forEach(t=>t.addEventListener('click', ()=>{ zoom.value=t.dataset.l; setLevel(LEVELS[+t.dataset.l], 650); }));
 zoom.value = LEVELS.indexOf(DEFAULT_LEVEL);
 setLevel(DEFAULT_LEVEL, 0); // zoom initial : le tour en cours, sans animation
 </script>
