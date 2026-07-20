@@ -94,10 +94,8 @@ function switchUI(){
 function draw(){
   chart.innerHTML="";
   for(let v=0; v<=maxY; v+=100){ line(M.l,y(v),W-M.r,y(v),v===0?"axis-line":"grid-line"); txt(M.l-8,y(v)+4,v,"end"); }
-  let lastDate=null;
-  MATCHES.forEach(o=>{ line(x(o.m),M.t+plotH,x(o.m),M.t+plotH+6,"axis-line");
-    txt(x(o.m),M.t+plotH+18,o.m,"middle","#c9d1d9");
-    if(o.date!==lastDate){ txt(x(o.m),M.t+plotH+34,o.date,"middle","#6b7280"); lastDate=o.date; } });
+  MATCHES.forEach(o=>{ line(x(o.m),M.t+plotH,x(o.m),M.t+plotH+5,"axis-line");
+    txtVert(x(o.m),M.t+plotH+13,o.m,"#c9d1d9"); });
   const vis=SERIES.filter(s=>!hidden.has(s.name));
   // courbes + points
   vis.forEach(s=>{
@@ -155,6 +153,12 @@ function el(t,a){const e=document.createElementNS(SVG,t);for(const k in a)e.setA
 function line(x1,y1,x2,y2,c){chart.appendChild(el("line",{x1,y1,x2,y2,class:c}));}
 function txt(xx,yy,t,anchor,fill,weight){const e=el("text",{x:xx,y:yy,"text-anchor":anchor||"start"});
   if(fill)e.setAttribute("fill",fill); if(weight)e.setAttribute("font-weight",weight); e.textContent=t; chart.appendChild(e);}
+// Numero de match a chiffres empiles verticalement (un tspan par chiffre = l'equivalent SVG du <br>).
+function txtVert(xx,yTop,t,fill){const e=el("text",{"text-anchor":"middle","font-size":9});
+  if(fill)e.setAttribute("fill",fill);
+  String(t).split("").forEach((c,i)=>{const ts=document.createElementNS(SVG,"tspan");
+    ts.setAttribute("x",xx); ts.setAttribute("y",yTop+i*8.5); ts.textContent=c; e.appendChild(ts);});
+  chart.appendChild(e);}
 load(current);
 </script>
 </body>
