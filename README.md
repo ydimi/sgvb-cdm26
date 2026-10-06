@@ -20,8 +20,8 @@ prono ou snapshot personnel n'est jamais copié. Le `.gitignore` bloque en plus 
 
 ```bash
 # 1. Régénérer les sources (comme d'habitude)
-#    - dans ~/work/custom/wc26 : /maj      (classement, histoires, journées, super-vainqueur)
-#    - dans ~/work/custom/aym  : /maj-aym  (dashboard.html)
+#    - dans ~/custom/wc26 : /maj      (classement, histoires, journées, super-vainqueur)
+#    - dans ~/custom/aym  : /maj-aym  (dashboard.html)
 
 # 2. Publier + déployer : commande /publie-site depuis la fenêtre Claude
 #    (ou manuellement : node publish.mjs puis git add/commit/push)
@@ -39,7 +39,7 @@ On peut aussi le passer ponctuellement via `AYM_PASSWORD='...' node publish.mjs`
 ## Test local
 
 ```bash
-cd ~/work/custom/sgvb-cdm26
+cd ~/custom/sgvb-cdm26
 python3 -m http.server 8080   # crypto.subtle exige un contexte sûr (localhost l'est)
 # ouvrir http://localhost:8080
 ```
